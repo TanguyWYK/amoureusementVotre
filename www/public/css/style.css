@@ -1,0 +1,332 @@
+.container {
+    user-select: none;
+    overflow: hidden;
+    height: 100vh;
+}
+
+#cinema_background{
+    background-image: url(../images/site/cinema_transparent.png);
+    background-size: cover;
+    background-position: center;
+    height: 100%;
+    z-index: 2;
+    position: relative;
+}
+
+#curtain{
+    position: absolute;
+    top: calc(50% - 300px);
+    left: calc(50% - 306px);
+    background-image: url(../images/site/curtain.jpg);
+    background-size: cover;
+    background-position: center;
+    height: 408px;
+    width: 612px;
+    z-index: 1;
+}
+
+main,body{
+    margin: 0;
+}
+
+#navBar ul{
+    list-style: none;
+    padding: 0;
+    text-align: right;
+    margin-right: 20px;
+}
+
+#navBar li{
+    display: inline-block;
+}
+
+#login_form input{
+    font-size: 18px;
+    width: 280px;
+    height: 26px;
+}
+
+#login_form button{
+    height: 40px;
+    width: 40%;
+    margin: auto;
+}
+
+#login_form label{
+    display: inline-block;
+    min-width: 110px;
+    line-height: 30px;
+}
+
+#album_div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    overflow-x: hidden;
+}
+
+#categoryPhoto_div {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.categoryPhoto {
+    min-width: 30%;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.category_p {
+    margin: 0;
+}
+
+.miniPhoto {
+    cursor: pointer;
+    border: 1px solid transparent;
+    opacity: 0.5;
+    min-width: 150px;
+    display: flex;
+    justify-content: space-around;
+    overflow: hidden;
+    height: 100px;
+}
+
+.miniPhoto.selected{
+    opacity: 1;
+    border: 1px solid darkred;
+}
+
+.miniPhoto:hover{
+    opacity: 1;
+}
+
+.category_div:hover {
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+#photoDisplayed {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+}
+
+.hidden {
+    display: none;
+}
+
+#diaporamaControls .locked{
+    cursor: not-allowed;
+}
+
+#diaporamaControls .played{
+    color: darkred;
+    background-color: pink;
+}
+
+#album_div {
+    margin-top: 5px;
+    display: flex;
+}
+
+#diaporamaControls {
+    margin: 5px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#diaporamaControls div {
+    display: inline-block;
+    margin: 0 5px;
+    width: 50px;
+    line-height: 20px;
+    border: 1px black solid;
+    cursor: pointer;
+    text-align: center;
+}
+
+#diaporamaControls div:not(.played):hover  {
+    opacity: 0.7;
+    background-color: aquamarine;
+}
+
+#leftButton{
+    position: absolute;
+    left: 10px;
+}
+
+#rightButton{
+    position: absolute;
+    right: 10px;
+}
+
+#homeButton{
+    position: absolute;
+    left: 120px;
+}
+
+#logoutButton svg{
+    vertical-align: middle;
+}
+
+.icons {
+    background-color: transparent;
+    shape-rendering: geometricPrecision;
+    fill: currentColor;
+    overflow: initial;
+}
+
+.i_12x12 {
+    width: 12px;
+    height: 12px;
+}
+
+.i_26x26 {
+    width: 26px;
+    height: 26px;
+}
+
+.errorMessage {
+    color: #D8000C;
+    background-color: #FFBABA;
+    text-align: center;
+    line-height: 38px;
+    width: 50%;
+    display: inline-block;
+    margin-left: 20px;
+}
+
+.fade-in {
+    opacity: 0;
+    animation: fade-in 0.4s ease-out forwards;
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.zoom-inside {
+    animation: zoom-inside 4s ease-in forwards;
+}
+
+@keyframes zoom-inside {
+    0% {
+        background-size: 100%;
+    }
+    100% {
+        background-size: 250%;
+        background-position: top -100px;
+    }
+}
+
+.open-curtain {
+    animation: open-curtain 2s linear forwards;
+}
+
+@keyframes open-curtain {
+    0% {
+        background-size: 100%;
+        top: calc(50% - 300px);
+    }
+    100% {
+        background-size: 250%;
+        top: -500px;
+    }
+}
+
+.fade-in-and-out {
+    animation: fade-in-and-out 0.3s ease-in-out forwards;
+}
+
+@keyframes fade-in-and-out {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.slide-up{
+    animation: slide-up 1s ease-out forwards;
+}
+
+@keyframes slide-up {
+     100% {
+         margin-top: 15%;
+         opacity: 1;
+    }
+}
+
+#ticket{
+    width: 525px;
+    height: 297px;
+    border: 1px solid;
+    display: inline-block;
+    padding: 10px;
+    position: relative;
+    box-sizing: border-box;
+    background-color: white;
+    margin-left: calc(50% - 525px / 2);
+    margin-top: 100vh;
+    opacity: 0.5;
+}
+
+.horaire{
+    background-color: black;
+    color: white;
+    margin-left: 20px;
+    font-weight: bold;
+    font-size: 1.6rem;
+    padding: 2px 10px;
+}
+
+.cine{
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+.vf{
+    font-family: 'Roboto', sans-serif;
+    text-shadow: none;
+    color: black;
+    font-size: 1.2rem;
+}
+
+.code{
+    line-height: 16px;
+    font-size: 1.5rem;
+    font-family: 'Libre Barcode 39', cursive;
+    margin-left: 125px;
+    position: absolute;
+    bottom: -5px;
+}
+
+.lieu{
+    font-size: 1.2rem;
+    margin-left: 20px;
+    font-weight: bold;
+}
+
+label,p,.errorMessage{
+    font-family: 'Roboto', sans-serif;
+}
+
+h1{
+    font-size: 2.2rem;
+    font-family: 'Fascinate Inline', cursive;
+    text-align: center;
+    margin: 10px 8px;
+}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="Description" content="Ici le contenu">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="public/images/site/favicon-32x32.png">
+    <link rel="stylesheet" type="text/css" href="public/css/style.css"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fascinate+Inline&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+39&display=swap" rel="stylesheet">
+    <title>Amoureusement Vôtre</title>
+</head>
+    <body>
+    <header>
+
+    </header>
+    <main class="container">
+        <?php if (isset($template) && $template !== ""): ?>
+            <?php include $template . '.phtml' ?>
+        <?php endif; ?>
+    </main>
+    <footer>
+
+    </footer>
+    <script src="public/js/libraries/vueV2.6.12.js"></script>
+    <script src="public/js/main.js"></script>
+    <?php if ($menu === 'home'): ?>
+        <script src="public/js/menu.js"></script>
+        <script src="public/js/home.js"></script>
+    <?php elseif ($menu === 'album'): ?>
+        <script src="public/js/album.js"></script>
+    <?php endif; ?>
+    </body>
+</html>
