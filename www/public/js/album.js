@@ -25,10 +25,11 @@ postXHR('album', {
             idButtonDown: false,
             diaporama_play: false,
             isFullScreen: false,
+            height: Math.round(window.innerHeight * 0.8) + 'px',
         },
         template: `<div>
                         <div id="photoDisplayed">
-                            <img :src="photoSelectedPath" width="auto" height="800px">
+                            <img :src="photoSelectedPath" width="auto" :height="height">
                         </div>
                         <div id="diaporamaControls">
                             <div id="leftButton" @click="beginAlbum">${icons('backward', '12x12')}</div>
@@ -41,7 +42,12 @@ postXHR('album', {
                         </div>
                         <div id="album_div" @mousedown="mouseDownOnAlbum" @mousemove="mouseMoveOnAlbum" @mouseup="mouseUpOnAlbum" @mouseleave="mouseUpOnAlbum">
                             <div v-for="(photo,index) in photos" :key="photo.index" class="miniPhoto" :class="{selected: index===getSelectedPhoto}" @click="openPhoto(index)">
-                                <img :src="imagePathMini(photo)" width="auto" height="100px">
+                                <div>
+                                    <svg width="150" height="140">
+                                        <path fill="black" :d="makeHolesOnFilm" />
+                                    </svg>
+                                    <img :src="imagePathMini(photo)" width="auto" height="100px">
+                                </div>
                             </div>
                         </div>
                    </div>`,
@@ -51,36 +57,50 @@ postXHR('album', {
             },
             getSelectedPhoto() {
                 return this.selectedPhoto;
-            }
+            },
+            makeHolesOnFilm() {
+                let svgString = 'M0 0 h140 v140 h-140z M5 20 v100 h130 v-100z ';
+                for (let y = 6; y < 150; y += 116) {
+                    for (let i = 0; i < 7; i++) {
+                        let x = 6 + i * 20;
+                        svgString += 'M' + x + ' ' + y + ' q-2 0, -2 2, v8 q0 2, 2 2, h4 q2 0, 2 -2, v-8 q0 -2, -2 -2z';
+                    }
+                }
+                return svgString;
+            },
         },
         mounted() {
             let self = this;
             window.addEventListener('keydown', e => {
-                if(e.key === 'ArrowLeft'){
+                if (e.key === 'ArrowLeft') {
                     self.changePhoto(-1);
-                }else if(e.key === 'ArrowRight'){
+                } else if (e.key === 'ArrowRight') {
                     self.changePhoto(1);
-                }else if(e.key === 'd'){
+                } else if (e.key === 'd') {
                     self.deletePhoto();
                 }
             });
+            window.addEventListener('resize', e => {
+                this.height = Math.round(window.innerHeight * 0.8) + 'px';
+            });
         },
         methods: {
-            goToCategories(){
-                window.location = 'home'
+            goToCategories() {
+                window.location = 'home';
             },
-            deletePhoto(){
+            deletePhoto() {
                 postXHR('album', {
                     action: 'deletePhoto',
                     path: this.photoSelectedPath,
-                    path_mini : this.imagePathMini(this.photos[this.selectedPhoto]),
-                }).then(()=>{
+                    path_mini: this.imagePathMini(this.photos[this.selectedPhoto]),
+                }).then(() => {
                     this.changePhoto(1);
                 });
             },
             imagePathMini(photoName) {
                 let extension = photoName.split('.').pop();
                 let name = photoName.replace(/\.[^/.]+$/, '') + '_mini';
+                console.log(1)
                 return this.path_mini + name + '.' + extension;
             },
             openPhoto(index) {
@@ -140,7 +160,7 @@ postXHR('album', {
                     let difference = this.clickPosition - position;
                     if (Math.abs(difference) > 50) {
                         difference *= 4;
-                    }else if(Math.abs(difference) > 20) {
+                    } else if (Math.abs(difference) > 20) {
                         difference *= 2;
                     }
                     this.albumElement.scrollLeft += difference;

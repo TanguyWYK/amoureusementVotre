@@ -6,30 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="www/public/images/site/favicon-32x32.png">
     <link rel="stylesheet" type="text/css" href="www/public/css/style.css"/>
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Fascinate+Inline&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+39&display=swap" rel="stylesheet">
     <title>Amoureusement Vôtre</title>
 </head>
-    <body>
-    <header>
+<body>
+<header>
 
-    </header>
-    <main class="container">
-        <?php if (isset($template) && $template !== ""): ?>
-            <?php include $template . '.phtml' ?>
-        <?php endif; ?>
-    </main>
-    <footer>
-
-    </footer>
-    <script src="www/public/js/libraries/vueV2.6.12.js"></script>
-    <script src="www/public/js/main.js"></script>
-    <?php if ($menu === 'home'): ?>
-        <script src="www/public/js/menu.js"></script>
-        <script src="www/public/js/home.js"></script>
-    <?php elseif ($menu === 'album'): ?>
-        <script src="www/public/js/album.js"></script>
+</header>
+<main class="container">
+    <?php if (isset($template) && $template !== ""): ?>
+        <?php include $template . '.phtml' ?>
     <?php endif; ?>
-    </body>
+</main>
+<footer>
+
+</footer>
+<script src="www/public/js/libraries/vueV2.6.12.js"></script>
+<script src="www/public/js/main.js"></script>
+<?php if ($menu === 'home'): ?>
+    <script src="www/public/js/menu.js"></script>
+    <script src="www/public/js/home.js"></script>
+<?php elseif ($menu === 'album'): ?>
+    <script src="www/public/js/album.js"></script>
+<?php endif; ?>
+</body>
 </html>

@@ -5,10 +5,10 @@ include_once '../headers/headers.php';
 $session = new Session();
 
 if (!empty($_POST)) {
-    if($_POST['action'] === 'login') {
+    if ($_POST['action'] === 'login') {
         $password = $_POST['password'];
         $correct_password = '$2y$10$tMUFQ24knYE04oCRS65GJ.ObmTFOsWNkKc.d/QUKnO6J68oaGthFW';
-        if(password_verify($password, $correct_password)) {
+        if (password_verify($password, $correct_password)) {
             $User = new UserModel();
             $Login = new LoginModel();
             $email = $_POST['email'];
@@ -19,7 +19,7 @@ if (!empty($_POST)) {
             }
             $session->create($user);
             echo json_encode(true);
-        }else{
+        } else {
             header('Content-type: application/json');
             echo json_encode(false);
             exit();

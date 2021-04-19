@@ -36,11 +36,13 @@ function icons(name, dimensions) {
 
 
 window.addEventListener('load', () => {
-    let ticketElement = document.getElementById('ticket');
-    if (ticketElement) {
-        document.getElementById('wait_loading').remove();
-        ticketElement.classList.add('slide-up');
-    }
+    document.getElementById('wait_loading').remove();
+    document.addEventListener('click', () => {
+        let ticketElement = document.getElementById('ticket');
+        if (ticketElement) {
+            ticketElement.classList.add('slide-up');
+        }
+    }, false);
 }, false);
 
 

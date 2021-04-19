@@ -13,10 +13,10 @@ let menu = new Vue({
                 </ul>     
                </nav>`,
     methods: {
-        logout(){
+        logout() {
             postXHR('logout', {
                 action: 'logout',
-            }).then(function(){
+            }).then(function () {
                 window.location = 'home';
             });
         }

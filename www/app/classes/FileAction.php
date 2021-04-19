@@ -32,7 +32,7 @@ class FileAction
         }
     }
 
-    function generateMiniPhotos($path_origin, $path_destination,$suffix, $max_height, $max_size, $quality)
+    function generateMiniPhotos($path_origin, $path_destination, $suffix, $max_height, $max_size, $quality)
     {
         $files = array_values(array_diff(scandir($path_origin), array('.', '..')));
         foreach ($files as $file) {
@@ -63,16 +63,16 @@ class FileAction
             }
             $width_before = imagesx($image);
             $height_before = imagesy($image);
-            if($max_height !== null) {
+            if ($max_height !== null) {
                 $finalWidthLayer = $max_height / $height_before * $width_before;
                 $finalHeightLayer = $max_height;
-            }elseif($width_before>=$height_before && $width_before>$max_size){
+            } elseif ($width_before >= $height_before && $width_before > $max_size) {
                 $finalWidthLayer = $max_size;
                 $finalHeightLayer = $max_size / $width_before * $height_before;
-            }elseif ($width_before<$height_before && $height_before>$max_size){
+            } elseif ($width_before < $height_before && $height_before > $max_size) {
                 $finalWidthLayer = $max_size / $height_before * $width_before;
                 $finalHeightLayer = $max_size;
-            }else{
+            } else {
                 // Photo plus petite que la taille mini, donc on ne change pas
                 $finalWidthLayer = $width_before;
                 $finalHeightLayer = $height_before;
