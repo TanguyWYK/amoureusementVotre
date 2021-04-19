@@ -14,32 +14,32 @@ if (!$session->isAuthenticated()) {
 if (!empty($_POST)) {
     $Album = new AlbumModel();
     if ($_POST['action'] === 'getCategoryNames') {
-        $dirPath = ABSOLUTE_PATH . 'storage\photos\\';
+        $dirPath = RELATIVE_PATH['storage'] . 'photos_compressed\\';
         $files = array_values(array_diff(scandir($dirPath), array('.', '..')));
         $response = [];
         foreach ($files as $file) {
             //if ($file !== '08-Corbeille') {
-                $element = new stdClass();
-                $element->title = $file;
-                $element->mini_photo = $Album->getMiniPhotoByCategoryTitle($file);
-                $response[] = $element;
+            $element = new stdClass();
+            $element->title = $file;
+            $element->mini_photo = $Album->getMiniPhotoByCategoryTitle($file);
+            $response[] = $element;
             //}
         }
         header('Content-type: application/json');
         echo json_encode($response);
     } elseif ($_POST['action'] === 'getPhotoNames') {
         $categoryTitle = $Album->getAlbumTitleByCategoryId($_POST['albumId']);
-        $dirPath = ABSOLUTE_PATH . 'storage\photos_compressed\\' . $categoryTitle . '\\';
+        $dirPath = RELATIVE_PATH['storage'] . 'photos_compressed\\' . $categoryTitle . '\\';
         $files = array_values(array_diff(scandir($dirPath), array('.', '..')));
         $Response = new stdClass();
-        $Response->path = 'storage\photos_compressed\\' . $categoryTitle . '\\';
-        $Response->path_mini = 'storage\photos_mini\\' . $categoryTitle . '\\';
+        $Response->path = 'www\storage\photos_compressed\\' . $categoryTitle . '\\';
+        $Response->path_mini = 'www\storage\photos_mini\\' . $categoryTitle . '\\';
         $Response->photos = $files;
         header('Content-type: application/json');
         echo json_encode($Response);
-    }elseif ($_POST['action'] === 'deletePhoto') {
-        $old_path = ABSOLUTE_PATH . '\\'.$_POST['path'];
-        if(file_exists($old_path)) {
+    } elseif ($_POST['action'] === 'deletePhoto') {
+        $old_path = ABSOLUTE_PATH . '\\' . $_POST['path'];
+        if (file_exists($old_path)) {
             // Photo taille normale
             $old_path = ABSOLUTE_PATH . '\\' . $_POST['path'];
             $parts = explode("\\", $_POST['path']);

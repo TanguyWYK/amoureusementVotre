@@ -4,6 +4,19 @@
     height: 100vh;
 }
 
+#wait_loading{
+    background-color: black;
+    background-size: cover;
+    background-position: center;
+    height: 100%;
+    z-index: 3;
+    position: relative;
+}
+
+button{
+    cursor: pointer;
+}
+
 #cinema_background{
     background-image: url(../images/site/cinema_transparent.png);
     background-size: cover;
@@ -39,6 +52,18 @@ main,body{
 #navBar li{
     display: inline-block;
 }
+
+#login_button{
+    background-color: #0277BD;
+    color: white;
+    border: none;
+}
+
+#login_button:hover{
+    background-color: #03A9F4;
+    transition-duration: 0.3s;
+}
+
 
 #login_form input{
     font-size: 18px;
@@ -171,8 +196,31 @@ main,body{
     left: 120px;
 }
 
-#logoutButton svg{
-    vertical-align: middle;
+#logoutButton{
+    position: relative;
+}
+
+#logoutButton:hover{
+    cursor: pointer;
+}
+
+#logoutButton img{
+    position: relative;
+    z-index: 2;
+}
+
+
+#logoutButton:hover::before{
+    position: absolute;
+    top: 20px;
+    left: 30px;
+    background-color: gold;
+    box-shadow: 0 0 15px gold;
+    z-index: 1;
+    width: 40px;
+    height: 80px;
+    border-radius: 50%;
+    content:"";
 }
 
 .icons {
@@ -194,7 +242,7 @@ main,body{
 
 .errorMessage {
     color: #D8000C;
-    background-color: #FFBABA;
+    font-weight: bold;
     text-align: center;
     line-height: 38px;
     width: 50%;
@@ -224,24 +272,26 @@ main,body{
     0% {
         background-size: 100%;
     }
+    80%{
+        opacity: 1;
+    }
     100% {
         background-size: 250%;
-        background-position: top -100px;
+        background-position: 50% 40%;
+        opacity: 0;
     }
 }
 
 .open-curtain {
-    animation: open-curtain 2s linear forwards;
+    animation: open-curtain 3s linear forwards;
 }
 
 @keyframes open-curtain {
-    0% {
-        background-size: 100%;
-        top: calc(50% - 300px);
-    }
+
     100% {
-        background-size: 250%;
+        width: 70vw;
         top: -500px;
+        left: 10vw;
     }
 }
 

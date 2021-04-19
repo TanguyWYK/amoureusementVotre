@@ -8,24 +8,24 @@ RewriteEngine On
 
 
 # Réécriture des URL
-RewriteRule ^$  app/controllers/home.php [L]
-RewriteRule ^home$  app/controllers/home.php [L]
-RewriteRule ^login$  app/controllers/login.php [L]
-RewriteRule ^album.  app/controllers/album.php [L]
+RewriteRule ^$  www/app/controllers/home.php [L]
+RewriteRule ^home$  www/app/controllers/home.php [L]
+RewriteRule ^login$  www/app/controllers/login.php [L]
+RewriteRule ^album.  www/app/controllers/album.php [L]
 
 # Redirection pour la favicon
-RewriteRule ^favicon.ico$ public/images/site/favicon-32x32.png [NC,L]
+RewriteRule ^favicon.ico$ www/public/images/site/favicon-32x32.png [NC,L]
 
 # BEGIN Cache-Control Headers
 <IfModule mod_headers.c>
  <FilesMatch "\.(ico|jpe?g|png|gif|swf|gz|ttf|woff2|webp|svg)$">
- Header set Cache-Control "max-age=31536000, public"
+ Header set Cache-Control "max-age=3000000, public"
  </FilesMatch>
  <FilesMatch "\.(css)$">
- Header set Cache-Control "max-age=31536000, public"
+ Header set Cache-Control "max-age=3000000, public"
  </FilesMatch>
  <FilesMatch "\.(js)$">
- Header set Cache-Control "max-age=31536000, private"
+ Header set Cache-Control "max-age=3000000, private"
  </FilesMatch>
  <FilesMatch "\.(html|phtml)$">
  Header unset Cache-Control

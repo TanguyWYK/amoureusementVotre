@@ -9,6 +9,7 @@ const RELATIVE_PATH = [
     'views' => ABSOLUTE_PATH . 'app/views/',
     'headers' => ABSOLUTE_PATH . 'app/headers/',
     'database' => ABSOLUTE_PATH . 'app/database/',
+    'storage' => ABSOLUTE_PATH . 'storage/',
 ];
 
 

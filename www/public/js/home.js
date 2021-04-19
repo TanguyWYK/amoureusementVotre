@@ -6,7 +6,7 @@ postXHR('album', {
     let app = new Vue({
         el: '#categories',
         data: {
-            path: 'storage/photos_category/',
+            path: RELATIVE_PATH.storage + 'photos_category/',
             repertories: data,
         },
         template: `<div id="categoryPhoto_div">

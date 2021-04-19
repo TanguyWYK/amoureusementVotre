@@ -1,23 +1,24 @@
 'use strict';
 
 const RELATIVE_PATH = {
-    controllers: 'app/controllers/',
-    views: 'app/views/',
-    icons: 'public/icons/',
+    controllers: 'www/app/controllers/',
+    views: 'www/app/views/',
+    icons: 'www/public/icons/',
+    storage: 'www/storage/',
 };
 
-function renameFiles(){
-    postXHR('controls',{
+function renameFiles() {
+    postXHR('controls', {
         action: 'renameFiles',
-    }).then((data)=>{
+    }).then((data) => {
         console.log(data);
     });
 }
 
-function generateMiniPhotos(){
-    postXHR('controls',{
+function generateMiniPhotos() {
+    postXHR('controls', {
         action: 'generateMiniPhotos',
-    }).then((data)=>{
+    }).then((data) => {
         console.log(data);
     });
 }
@@ -35,7 +36,11 @@ function icons(name, dimensions) {
 
 
 window.addEventListener('load', () => {
-   document.getElementById('ticket').classList.add('slide-up');
+    let ticketElement = document.getElementById('ticket');
+    if (ticketElement) {
+        document.getElementById('wait_loading').remove();
+        ticketElement.classList.add('slide-up');
+    }
 }, false);
 
 
@@ -77,31 +82,34 @@ function encodeURIObject(data) {
     return encodeURI(response.slice(0, -1)); // pour enlever le dernier &
 }
 
-function testLogin(){
-    document.getElementById('login_form').addEventListener('submit',(event)=>event.preventDefault());
+function testLogin() {
+    document.getElementById('login_form').addEventListener('submit', (event) => event.preventDefault());
     let email = document.getElementById('loginEmail_input').value.toLowerCase();
     let password = document.getElementById('loginPassword_input').value;
     let errorMessage = '';
-    if(password.length===0){
-        errorMessage = 'Ticket invalide';
-    }else if(!(/^(\S)+@+(\S)+\.+(\w)/g).test(email) || email.split('@').length>2){
+    if (password.length === 0) {
+        errorMessage = 'Présentez votre ticket';
+        document.getElementById('loginPassword_input').focus();
+    } else if (!(/^(\S)+@+(\S)+\.+(\w)/g).test(email) || email.split('@').length > 2) {
         errorMessage = 'Email invalide';
+        document.getElementById('loginEmail_input').focus();
     }
     let errorMessageElement = document.getElementById('errorLogin_div');
-    if(errorMessage === ''){
-        postXHR('login',{
+    if (errorMessage === '') {
+        postXHR('login', {
             action: 'login',
             email: email,
             password: password,
-        }).then((data)=>{
+        }).then((data) => {
             if (data === false) {
-                showErrorMessage('Ticket invalide',errorMessageElement);
+                showErrorMessage('Ticket introuvable', errorMessageElement);
+                document.getElementById('loginPassword_input').focus();
             } else {
                 animationEnter();
             }
         });
-    }else{
-        showErrorMessage(errorMessage,errorMessageElement);
+    } else {
+        showErrorMessage(errorMessage, errorMessageElement);
     }
 }
 
@@ -118,12 +126,12 @@ function showErrorMessage(errorMessage, errorElement) {
     setTimeout(() => errorElement.classList.remove('fade-in'), 500);
 }
 
-function animationEnter(){
+function animationEnter() {
     document.getElementById('ticket').classList.remove('slide-up');
     document.getElementById('cinema_background').classList.add('zoom-inside');
     document.getElementById('curtain').classList.add('open-curtain');
 
-    /*setTimeout(function(){
+    setTimeout(function () {
         document.location.href = 'home';
-    },500);*/
+    }, 4000);
 }
