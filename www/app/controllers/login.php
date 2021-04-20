@@ -8,6 +8,7 @@ if (!empty($_POST)) {
     if ($_POST['action'] === 'login') {
         $password = $_POST['password'];
         $correct_password = '$2y$10$tMUFQ24knYE04oCRS65GJ.ObmTFOsWNkKc.d/QUKnO6J68oaGthFW';
+        $Event = new EventModel();
         if (password_verify($password, $correct_password)) {
             $User = new UserModel();
             $Login = new LoginModel();
@@ -18,8 +19,10 @@ if (!empty($_POST)) {
                 $user = $User->getUserById($email);
             }
             $session->create($user);
+            $Event->addEvent('login_' . $session->getId());
             echo json_encode(true);
         } else {
+            $Event->addEvent('wrong_password');
             header('Content-type: application/json');
             echo json_encode(false);
             exit();

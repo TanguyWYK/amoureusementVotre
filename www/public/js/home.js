@@ -12,7 +12,7 @@ postXHR('album', {
         template: `<div id="categoryPhoto_div">
                     <div v-for="(repertory,index) in repertories" :key="repertory.index" class="categoryPhoto" @click="openCategory(index)">
                     <div class="category_div">
-                    <img :src="imagePath(repertory)" width="auto" height="200px">
+                    <img :src="imagePath(repertory)" width="auto" height="200px" @mouseout="changeAnglePolaroid(index)">
                     <p class="category_p">{{ categoryTitle(repertory.title) }}</p>
                     </div>
                     </div>
@@ -26,6 +26,14 @@ postXHR('album', {
             },
             openCategory(index) {
                 window.location.href = 'album' + index;
+            },
+            changeAnglePolaroid(index) {
+                document.querySelectorAll('.category_div img')
+                    .forEach((element, key) => {
+                        if (key !== index) {
+                            element.style.setProperty('--angle-polaroid', Math.round(Math.random() * 4 - 1) + 'deg');
+                        }
+                    });
             }
         }
     });

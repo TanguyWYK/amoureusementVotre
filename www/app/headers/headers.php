@@ -17,6 +17,7 @@ const RELATIVE_PATH = [
 include RELATIVE_PATH['models'] . 'LoginModel.php';
 include RELATIVE_PATH['models'] . 'UserModel.php';
 include RELATIVE_PATH['models'] . 'AlbumModel.php';
+include RELATIVE_PATH['models'] . 'EventModel.php';
 
 /* Include des classes */
 include RELATIVE_PATH['classes'] . 'Session.php';

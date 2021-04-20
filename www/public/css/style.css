@@ -1,7 +1,13 @@
+:root {
+    --button-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
+    --angle-polaroid: 1deg;
+}
+
 .container {
     user-select: none;
     overflow: hidden;
     height: 100vh;
+    position: relative;
 }
 
 #wait_loading {
@@ -11,6 +17,18 @@
     height: 100%;
     z-index: 3;
     position: relative;
+}
+
+#blackScreen {
+    background-color: black;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    font-size: 36px;
+    text-align: center;
+    padding-top: 20%;
+    color: white;
 }
 
 button {
@@ -24,6 +42,7 @@ button {
     height: 100%;
     z-index: 2;
     position: relative;
+    background-repeat: no-repeat;
 }
 
 #curtain {
@@ -99,9 +118,14 @@ main, body {
 }
 
 .categoryPhoto {
-    min-width: 30%;
+    width: 25%;
+    height: auto;
     text-align: center;
-    margin-bottom: 50px;
+    margin-bottom: 10px;
+    background-image: url(../images/site/roll_transparent.png);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .category_p {
@@ -142,9 +166,27 @@ main, body {
     opacity: 1;
 }
 
+.category_div img {
+    opacity: 0;
+    background: #fff;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    padding: 10px 10px 30px;
+    color: #8b8b8b;
+    box-shadow: 0 1px 5px 0 #656565;
+    transform: rotate(var(--angle-polaroid));
+    filter: alpha(opacity=85);
+    border: 1px solid #c9c9c9;
+}
+
+.category_div img:hover {
+    transition: all .5s ease-in-out;
+    opacity: 1;
+}
+
 .category_div:hover {
     cursor: pointer;
-    opacity: 0.7;
 }
 
 #photoDisplayed {
@@ -164,8 +206,10 @@ main, body {
 }
 
 #diaporamaControls .played {
-    color: darkred;
+    color: #551212;
     background-color: pink;
+    box-shadow: inset 1px 1px 1px grey, inset -1px -1px 1px grey, inset 1px -1px 1px grey, inset -1px 1px 1px grey;
+    transition-duration: 0.3s;
 }
 
 #album_div {
@@ -189,6 +233,7 @@ main, body {
     border: 1px black solid;
     cursor: pointer;
     text-align: center;
+    box-shadow: var(--button-shadow), var(--button-shadow), var(--button-shadow), var(--button-shadow);
 }
 
 #diaporamaControls div:not(.played):hover {
@@ -230,7 +275,7 @@ main, body {
     top: 20px;
     left: 30px;
     background-color: gold;
-    box-shadow: 0 0 15px gold;
+    box-shadow: 0 0 30px gold;
     z-index: 1;
     width: 40px;
     height: 80px;
@@ -250,9 +295,24 @@ main, body {
     height: 12px;
 }
 
+.i_10x10 {
+    width: 10px;
+    height: 10px;
+}
+
+.i_11x11 {
+    width: 11px;
+    height: 11px;
+}
+
 .i_26x26 {
     width: 26px;
     height: 26px;
+}
+
+.i_40x40 {
+    width: 40px;
+    height: 40px;
 }
 
 .errorMessage {
@@ -265,7 +325,7 @@ main, body {
     margin-left: 20px;
 }
 
-.fade-in {
+.fade-in-400 {
     opacity: 0;
     animation: fade-in 0.4s ease-out forwards;
 }
@@ -310,16 +370,20 @@ main, body {
     }
 }
 
-.fade-in-and-out {
-    animation: fade-in-and-out 0.3s ease-in-out forwards;
+.fade-in-300 {
+    animation: fade-in 0.3s ease-in-out forwards;
 }
 
-@keyframes fade-in-and-out {
+.fade-out-200 {
+    animation: fade-out 0.2s ease-in-out forwards;
+}
+
+@keyframes fade-out {
     0% {
-        opacity: 0;
+        opacity: 1;
     }
     100% {
-        opacity: 1;
+        opacity: 0;
     }
 }
 
@@ -337,17 +401,39 @@ main, body {
     }
 }
 
+.animate_rotate {
+    animation: waitingRotate 2s linear infinite;
+}
+
+@keyframes waitingRotate {
+    0% {
+        transform: rotate(0deg);
+        opacity: 1;
+    }
+
+    50% {
+        transform: rotate(180deg);
+        opacity: 0.1;
+    }
+
+    100% {
+        transform: rotate(360deg);
+        opacity: 1;
+    }
+}
+
 #ticket {
     width: 525px;
     height: 297px;
-    border: 1px solid;
+    border: 1px solid black;
     display: inline-block;
     padding: 10px;
     position: relative;
     box-sizing: border-box;
     background-color: white;
     margin-left: calc(50% - 525px / 2);
-    margin-top: 100vh;
+    margin-top: 110vh;
+    box-shadow: inset -10px 0 19px rgba(0, 0, 0, 0.4);
 }
 
 .horaire {

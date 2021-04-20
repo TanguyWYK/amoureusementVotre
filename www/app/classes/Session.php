@@ -23,14 +23,14 @@ class Session
         session_destroy();
     }
 
+    public function getId()
+    {
+        return $_SESSION["id"];
+    }
+
     public function getEmail()
     {
         return htmlentities($_SESSION['email']);
-    }
-
-    public function getUserId()
-    {
-        return $_SESSION['id'];
     }
 
     public function isAuthenticated()

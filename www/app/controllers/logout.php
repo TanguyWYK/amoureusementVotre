@@ -3,6 +3,8 @@
 include_once '../headers/headers.php';
 
 $session = new Session();
+$Event = new EventModel();
+$Event->addEvent('logout_' . $session->getId());
 $session->destroy();
 
 $menu = 'login';

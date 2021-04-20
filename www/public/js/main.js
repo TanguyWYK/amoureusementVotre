@@ -36,7 +36,8 @@ function icons(name, dimensions) {
 
 
 window.addEventListener('load', () => {
-    document.getElementById('wait_loading').remove();
+    let waitElement = document.getElementById('wait_loading');
+    if (waitElement) waitElement.remove();
     document.addEventListener('click', () => {
         let ticketElement = document.getElementById('ticket');
         if (ticketElement) {
@@ -122,10 +123,10 @@ function testLogin() {
  * @param {HTMLElement} errorElement
  */
 function showErrorMessage(errorMessage, errorElement) {
-    errorElement.classList.remove('fade-in');
+    errorElement.classList.remove('fade-in-400');
     errorElement.textContent = errorMessage;
-    errorElement.classList.add('fade-in');
-    setTimeout(() => errorElement.classList.remove('fade-in'), 500);
+    errorElement.classList.add('fade-in-400');
+    setTimeout(() => errorElement.classList.remove('fade-in-400'), 500);
 }
 
 function animationEnter() {

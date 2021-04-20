@@ -35,6 +35,8 @@ if (!empty($_POST)) {
         $Response->path = 'www\storage\photos_compressed\\' . $categoryTitle . '\\';
         $Response->path_mini = 'www\storage\photos_mini\\' . $categoryTitle . '\\';
         $Response->photos = $files;
+        $Event = new EventModel();
+        $Event->addEvent('open_' . $_POST['albumId']);
         header('Content-type: application/json');
         echo json_encode($Response);
     } elseif ($_POST['action'] === 'deletePhoto') {
