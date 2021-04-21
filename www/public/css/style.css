@@ -8,6 +8,7 @@
     overflow: hidden;
     height: 100vh;
     position: relative;
+    background-color: white;
 }
 
 #wait_loading {
@@ -65,10 +66,11 @@ main, body {
     list-style: none;
     padding: 0;
     text-align: right;
-    margin-right: 20px;
+    margin: 0 50px 0 0;
 }
 
 #navBar li {
+    margin-top: 50px;
     display: inline-block;
 }
 
@@ -117,13 +119,20 @@ main, body {
     margin-right: auto;
 }
 
+#categoryBackground{
+    height: 100%;
+    background-image: url(../images/site/background2.jpg);
+    background-size: cover;
+    background-position: center;
+}
+
 .categoryPhoto {
     width: 25%;
     height: auto;
     text-align: center;
     margin-bottom: 10px;
     background-image: url(../images/site/roll_transparent.png);
-    background-size: contain;
+    background-size: 150px;
     background-position: center;
     background-repeat: no-repeat;
 }
@@ -132,8 +141,7 @@ main, body {
     margin: 0;
 }
 
-.miniPhoto {
-    cursor: pointer;
+#album_div div {
     opacity: 0.5;
     min-width: 140px;
     display: flex;
@@ -143,32 +151,42 @@ main, body {
     position: relative;
 }
 
-.miniPhoto img {
+#album_div.grabbing{
+    cursor: grabbing;
+}
+
+#album_div img {
     margin-top: 20px;
     filter: sepia(1);
 }
 
-.miniPhoto svg {
+#album_div svg {
     position: absolute;
     z-index: 2;
     left: 0;
 }
 
-.miniPhoto.selected {
+#album_div div.selected {
     opacity: 1;
 }
 
-.miniPhoto.selected img {
-    filter: sepia(0);
+#album_div div.selected img {
+    animation: sepia-out 0.4s ease-out forwards;
 }
 
-.miniPhoto:hover {
+@keyframes sepia-out {
+    100% {
+        filter: sepia(0);
+    }
+}
+
+#album_div div:hover {
     opacity: 1;
 }
 
 .category_div img {
     opacity: 0;
-    background: #fff;
+    background: ghostwhite;
     display: inline-block;
     text-align: center;
     text-decoration: none;
@@ -216,6 +234,7 @@ main, body {
     margin-top: 5px;
     display: flex;
     position: relative;
+    cursor: pointer;
 }
 
 #diaporamaControls {
@@ -274,8 +293,8 @@ main, body {
     position: absolute;
     top: 20px;
     left: 30px;
-    background-color: gold;
-    box-shadow: 0 0 30px gold;
+    background-color: red;
+    box-shadow: 0 0 40px red;
     z-index: 1;
     width: 40px;
     height: 80px;
@@ -370,8 +389,8 @@ main, body {
     }
 }
 
-.fade-in-300 {
-    animation: fade-in 0.3s ease-in-out forwards;
+.fade-in-500 {
+    animation: fade-in 0.5s ease-in-out forwards;
 }
 
 .fade-out-200 {

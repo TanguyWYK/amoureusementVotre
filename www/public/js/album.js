@@ -3,6 +3,7 @@
 const TIME_LONG_CLICK = 1000;
 const TIME_FAST_CHANGE = 300;
 const TIME_NORMAL_CHANGE = 2500;
+const TIME_FADE_OUT = 200;
 
 postXHR('album', {
     action: 'getPhotoNames',
@@ -19,14 +20,15 @@ postXHR('album', {
             photoIsPreloaded: new Array(data.photos.length).fill(false),
             timer: null,
             scroll: false,
+            isScrolling: false,
             clickPosition: 0,
             albumElement: null,
             clickButton_time: null,
             clickButton_change: 1,
             idButtonDown: false,
             diaporama_play: false,
-            isFullScreen: false,
-            height: Math.round(window.innerHeight * 0.8) + 'px',
+            isFirstLoad: true,
+            height: null,
         },
         template: `<div>
                         <div id="photoDisplayed">
@@ -41,14 +43,14 @@ postXHR('album', {
                             <div id="homeButton" @click="goToCategories">${icons('home', '12x12')}</div>
                             <div id="rightButton" @click="endAlbum">${icons('forward', '12x12')}</div>
                         </div>
-                        <div id="album_div" @mousedown="mouseDownOnAlbum" @mousemove="mouseMoveOnAlbum" @mouseup="mouseUpOnAlbum" @mouseleave="mouseUpOnAlbum">
-                            <div v-for="(photo,index) in photos" :key="photo.index" class="miniPhoto" :class="{selected: index===getSelectedPhoto}" @click="openPhoto(index)">
-                                <div>
-                                    <svg width="150" height="140">
-                                        <path fill="black" :d="makeHolesOnFilm" />
-                                    </svg>
-                                    <img :src="imagePathMini(photo)" width="auto" height="100px">
-                                </div>
+                        <div id="album_div" :class="{grabbing: isScrolling}" @mousedown="mouseDownOnAlbum" @mousemove="mouseMoveOnAlbum" @mouseup="mouseUpOnAlbum" @mouseleave="mouseUpOnAlbum">
+                            <div v-for="(photo,index) in photos" :key="photo.index" 
+                                :class="{selected: index === getSelectedPhoto}"
+                                @click="openPhoto(index)">
+                                <svg width="150" height="140">
+                                    <path fill="black" :d="makeHolesOnFilm" />
+                                </svg>
+                                <img :src="imagePathMini(photo)" width="auto" height="100px">
                             </div>
                         </div>
                         <div id="blackScreen"><p>${icons('spinner', '40x40 animate_rotate')}</p></div>
@@ -84,24 +86,35 @@ postXHR('album', {
                 }
             });
             window.addEventListener('resize', e => {
-                this.height = Math.round(window.innerHeight * 0.8) + 'px';
+                self.setHeight();
             });
-            this.preloadOnePhoto(() => {
-                document.getElementById('blackScreen').remove();
-                //this.preloadTwoPhotos();
-            });
+            this.setHeight();
+            this.preloadTwoPhotos();
         },
         methods: {
+            setHeight() {
+                if (this.diaporama_play) {
+                    this.height = Math.round(window.innerHeight - 195) + 166 + 'px';
+                } else {
+                    this.height = Math.round(window.innerHeight - 195) + 'px';
+                }
+            },
             photoIsLoaded() {
                 let imageElement = document.querySelector('#photoDisplayed img');
-                imageElement.classList.add('fade-in-300');
                 imageElement.classList.remove('fade-out-200');
+                imageElement.classList.add('fade-in-500');
+                if (this.isFirstLoad) {
+                    document.getElementById('blackScreen').remove();
+                    this.isFirstLoad = false;
+                }
             },
             animatePhotoOpening(index) {
-                let imageElement = document.querySelector('#photoDisplayed img');
                 if (this.selectedPhoto !== index) {
-                    imageElement.classList.add('fade-out-200');
-                    imageElement.classList.remove('fade-in-300');
+                    this.temporizeChangePhoto(this.selectedPhoto, () => {
+                        let imageElement = document.querySelector('#photoDisplayed img');
+                        imageElement.classList.remove('fade-in-500');
+                    });
+
                 }
             },
             preloadTwoPhotos() {
@@ -154,38 +167,52 @@ postXHR('album', {
                 let name = photoName.replace(/\.[^/.]+$/, '') + '_mini';
                 return this.path_mini + name + '.' + extension;
             },
-            openPhoto(index) {
-                this.animatePhotoOpening(index);
-                this.photoIsPreloaded[index] = true;
+            temporizeChangePhoto(index, callback = () => {
+            }) {
+                let imageElement = document.querySelector('#photoDisplayed img');
+                imageElement.classList.remove('fade-in-500');
+                imageElement.classList.add('fade-out-200');
                 setTimeout(() => {
                     this.selectedPhoto = index;
-                }, 0);
+                    callback();
+                }, TIME_FADE_OUT);
+            },
+            openPhoto(index) {
+                //this.animatePhotoOpening(index);
+                this.photoIsPreloaded[index] = true;
+                this.temporizeChangePhoto(index);
             },
             changePhoto(change) {
                 let offsetX = 152;
+                let direction = 24;
                 let photoChanged = true;
                 if (change < 0 && this.selectedPhoto > 0) {
-                    this.animatePhotoOpening(this.selectedPhoto - 1);
-                    this.selectedPhoto--;
-                    this.photoIsPreloaded[this.selectedPhoto] = true;
+                    //this.animatePhotoOpening(this.selectedPhoto - 1);
+                    this.temporizeChangePhoto(this.selectedPhoto - 1, () => {
+                        this.photoIsPreloaded[this.selectedPhoto] = true;
+                    });
                     offsetX *= -1;
+                    direction = 48;
                 } else if (change > 0 && this.selectedPhoto < this.numberOfPhotos - 1) {
-                    this.animatePhotoOpening(this.selectedPhoto + 1);
-                    this.selectedPhoto++;
-                    this.photoIsPreloaded[this.selectedPhoto] = true;
+                    //this.animatePhotoOpening(this.selectedPhoto + 1);
+                    this.temporizeChangePhoto(this.selectedPhoto + 1, () => {
+                        this.photoIsPreloaded[this.selectedPhoto] = true;
+                    });
                 } else {
                     photoChanged = false;
                 }
                 if (photoChanged || change === 0) {
-                    let photoSelected = document.querySelector('.miniPhoto.selected');
+                    let photoSelected = document.querySelector('#album_div div.selected');
                     let albumElement = document.getElementById('album_div');
-                    albumElement.scrollLeft = albumElement.scrollLeft + photoSelected.getBoundingClientRect().left + offsetX - window.innerWidth / 2;
+                    albumElement.scrollLeft = albumElement.scrollLeft + photoSelected.getBoundingClientRect().left + offsetX - 3 * 152 + direction;
                 }
                 this.preloadTwoPhotos();
             },
             startDiaporama() {
                 if (!this.diaporama_play) {
+                    requestFullScreen(document.querySelector('.container'));
                     this.diaporama_play = true;
+                    this.setHeight();
                     let iconElement = document.querySelector('#playButton svg')
                     iconElement.classList.add('i_11x11');
                     iconElement.classList.remove('i_12x12');
@@ -203,6 +230,7 @@ postXHR('album', {
                 iconElement.classList.add('i_12x12');
                 iconElement.classList.remove('i_11x11');
                 this.diaporama_play = false;
+                this.setHeight();
                 clearInterval(this.timer);
             },
             mouseDownOnAlbum() {
@@ -214,6 +242,7 @@ postXHR('album', {
             },
             mouseMoveOnAlbum() {
                 if (this.scroll) {
+                    this.isScrolling = true;
                     let position = event.clientX;
                     let difference = this.clickPosition - position;
                     if (Math.abs(difference) > 50) {
@@ -230,6 +259,7 @@ postXHR('album', {
                     this.preloadTwoPhotos();
                 }
                 this.scroll = false;
+                this.isScrolling = false;
             },
             mouseDownOnButton(change) {
                 this.clickButton_change = change;
@@ -255,19 +285,17 @@ postXHR('album', {
                 this.isButtonDown = false;
             },
             beginAlbum() {
-                this.animatePhotoOpening(0);
-                this.selectedPhoto = 0;
-                this.changePhoto(0);
-                let albumElement = document.getElementById('album_div');
-                albumElement.scrollLeft = 0;
+                this.temporizeChangePhoto(0, () => {
+                    let albumElement = document.getElementById('album_div');
+                    albumElement.scrollLeft = 0;
+                });
             },
             endAlbum() {
-                this.animatePhotoOpening(this.numberOfPhotos - 1);
-                this.selectedPhoto = this.numberOfPhotos - 1;
-                this.changePhoto(0);
-                let albumElement = document.getElementById('album_div');
-                albumElement.scrollLeft = (this.numberOfPhotos - 1) * 152;
-            }
+                this.temporizeChangePhoto(this.numberOfPhotos - 1, () => {
+                    let albumElement = document.getElementById('album_div');
+                    albumElement.scrollLeft = (this.numberOfPhotos - 1) * 152;
+                });
+            },
         }
     });
 });

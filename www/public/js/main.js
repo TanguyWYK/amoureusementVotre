@@ -129,6 +129,10 @@ function showErrorMessage(errorMessage, errorElement) {
     setTimeout(() => errorElement.classList.remove('fade-in-400'), 500);
 }
 
+/**
+ * Fonction qui fait la scène d'introduction
+ *
+ */
 function animationEnter() {
     document.getElementById('ticket').classList.remove('slide-up');
     document.getElementById('cinema_background').classList.add('zoom-inside');
@@ -137,4 +141,17 @@ function animationEnter() {
     setTimeout(function () {
         document.location.href = 'home';
     }, 4000);
+}
+
+/**
+ * Action le mode plein écran F11
+ *
+ * @param {HTMLElement} element
+ */
+function requestFullScreen(element) {
+    // Supports most browsers and their versions.
+    let requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;
+    if (requestMethod) { // Native full screen.
+        requestMethod.call(element);
+    }
 }
