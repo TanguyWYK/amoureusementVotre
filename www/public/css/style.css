@@ -119,9 +119,9 @@ main, body {
     margin-right: auto;
 }
 
-#categoryBackground{
+#categoryBackground {
     height: 100%;
-    background-image: url(../images/site/background2.jpg);
+    background-image: url(../images/site/background.jpg);
     background-size: cover;
     background-position: center;
 }
@@ -131,7 +131,7 @@ main, body {
     height: auto;
     text-align: center;
     margin-bottom: 10px;
-    background-image: url(../images/site/roll_transparent.png);
+    background-image: url(../images/site/film.png);
     background-size: 150px;
     background-position: center;
     background-repeat: no-repeat;
@@ -139,9 +139,11 @@ main, body {
 
 .category_p {
     margin: 0;
+    color: white;
+    position: absolute;
 }
 
-#album_div div {
+#album_div > div {
     opacity: 0.5;
     min-width: 140px;
     display: flex;
@@ -151,13 +153,47 @@ main, body {
     position: relative;
 }
 
-#album_div.grabbing{
+.sprite1 {
+    background-image: url(../../storage/photos_mini/01-Strasbourg_mairie/sprite.jpg);
+}
+
+.sprite2 {
+    background-image: url(../../storage/photos_mini/02-Strasbourg_soirée/sprite.jpg);
+}
+
+.sprite3 {
+    background-image: url(../../storage/photos_mini/03-Aubiac_église/sprite.jpg);
+}
+
+.sprite4 {
+    background-image: url(../../storage/photos_mini/04-Aubiac_après-midi/sprite.jpg);
+}
+
+.sprite5 {
+    background-image: url(../../storage/photos_mini/05-Aubiac_soirée/sprite.jpg);
+}
+
+.sprite6 {
+    background-image: url(../../storage/photos_mini/06-Photobooth/sprite.jpg);
+}
+
+.sprite7 {
+    background-image: url(../../storage/photos_mini/07-Riedisheim/sprite.jpg);
+}
+
+.sprite8 {
+    background-image: url(../../storage/photos_mini/08-Corbeille/sprite.jpg);
+}
+
+#album_div.grabbing {
     cursor: grabbing;
 }
 
-#album_div img {
-    margin-top: 20px;
+.mini {
+    margin: 20px auto 0 auto;
     filter: sepia(1);
+    height: 100px;
+    max-width: 140px;
 }
 
 #album_div svg {
@@ -170,7 +206,7 @@ main, body {
     opacity: 1;
 }
 
-#album_div div.selected img {
+#album_div div.selected .mini {
     animation: sepia-out 0.4s ease-out forwards;
 }
 
@@ -389,12 +425,12 @@ main, body {
     }
 }
 
-.fade-in-500 {
-    animation: fade-in 0.5s ease-in-out forwards;
+.fade-in-photo {
+    animation: fade-in 0.4s ease-in-out forwards;
 }
 
 .fade-out-200 {
-    animation: fade-out 0.2s ease-in-out forwards;
+    animation: fade-out .2s ease-in-out forwards;
 }
 
 @keyframes fade-out {
@@ -452,7 +488,7 @@ main, body {
     background-color: white;
     margin-left: calc(50% - 525px / 2);
     margin-top: 110vh;
-    box-shadow: inset -10px 0 19px rgba(0, 0, 0, 0.4);
+    box-shadow: inset -10px 0 19px rgba(0, 0, 0, 0.2);
 }
 
 .horaire {

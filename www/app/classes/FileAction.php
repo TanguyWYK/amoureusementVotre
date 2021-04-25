@@ -5,6 +5,11 @@ class FileAction
 {
     const OFFSET = 41;
 
+    public function getAllFilesInDirectory($path)
+    {
+        return array_values(array_diff(scandir($path), array('.', '..')));
+    }
+
     function renameFile($dirPath, $nameBefore, $nameAfter)
     {
         if (!file_exists($dirPath . $nameBefore)) {
@@ -81,5 +86,29 @@ class FileAction
             imagejpeg($image, $image_target_path, $quality);
 
         }
+    }
+
+    function generateSprite($path)
+    {
+        if (file_exists($path . '/sprite.jpg')) {
+            unlink($path . '/sprite.jpg');
+        }
+        ini_set("memory_limit", "256M");
+        $files = $this->getAllFilesInDirectory($path);
+        $width = 0;
+        $height = 100;
+        foreach ($files as $file) {
+            list($w) = getimagesize($path . '/' . $file);
+            $width += $w;
+        }
+        $background = imagecreatetruecolor($width, $height);
+        $position_x = 0;
+        foreach ($files as $file) {
+            list($w, $h) = getimagesize($path . '/' . $file);
+            $image_mini = imagecreatefromstring(file_get_contents($path . '/' . $file));
+            imagecopymerge($background, $image_mini, $position_x, 0, 0, 0, $w, $h, 100);
+            $position_x += $w;
+        }
+        imagejpeg($background, $path . '/sprite.jpg', 95);
     }
 }

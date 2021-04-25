@@ -31,6 +31,17 @@ if (!empty($_POST) && $session->isAdmin()) {
                 //$FileAction->generateMiniPhotos($path_origin, $path_destination, '_mini',100,100, 100);
             }
         }
+    } elseif ($_POST['action'] === 'generateSprites') {
+        $FileAction = new FileAction();
+        $dirPath = ABSOLUTE_PATH . 'storage\photos_mini\\';
+        $directories = array_diff(scandir($dirPath), array('.', '..'));
+        ini_set('max_execution_time', 3600);
+        foreach ($directories as $directory) {
+            if ($directory === '08-Corbeille') {
+                $FileAction->generateSprite($dirPath . '/' . $directory);
+            }
+        }
+        echo 'sprites done';
     }
 }
 exit;

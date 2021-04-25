@@ -2,7 +2,7 @@
 
 const TIME_LONG_CLICK = 1000;
 const TIME_FAST_CHANGE = 300;
-const TIME_NORMAL_CHANGE = 2500;
+const TIME_NORMAL_CHANGE = 3000;
 const TIME_FADE_OUT = 200;
 
 postXHR('album', {
@@ -14,8 +14,11 @@ postXHR('album', {
         data: {
             path: data.path,
             path_mini: data.path_mini,
+            sprite: data.sprite,
             selectedPhoto: 0,
             photos: data.photos,
+            miniPhotoMarginLeft: data.miniPhotoMarginLeft,
+            miniPhotoWidth: data.miniPhotoWidth,
             numberOfPhotos: data.photos.length,
             photoIsPreloaded: new Array(data.photos.length).fill(false),
             timer: null,
@@ -47,10 +50,10 @@ postXHR('album', {
                             <div v-for="(photo,index) in photos" :key="photo.index" 
                                 :class="{selected: index === getSelectedPhoto}"
                                 @click="openPhoto(index)">
-                                <svg width="150" height="140">
+                                <svg width="140" height="140">
                                     <path fill="black" :d="makeHolesOnFilm" />
                                 </svg>
-                                <img :src="imagePathMini(photo)" width="auto" height="100px">
+                                <div class="mini" :class="sprite" v-bind:style="{backgroundPosition: -miniPhotoMarginLeft[index]+'px',width: miniPhotoWidth[index]+'px'}"></div>
                             </div>
                         </div>
                         <div id="blackScreen"><p>${icons('spinner', '40x40 animate_rotate')}</p></div>
@@ -72,9 +75,13 @@ postXHR('album', {
                 }
                 return svgString;
             },
+            imagePathSprite() {
+                return this.path_mini + 'sprite.jpg';
+            },
         },
         mounted() {
             this.photoIsPreloaded[0] = true; // La première image est chargée à l'affichage
+
             let self = this;
             window.addEventListener('keydown', e => {
                 if (e.key === 'ArrowLeft') {
@@ -102,7 +109,7 @@ postXHR('album', {
             photoIsLoaded() {
                 let imageElement = document.querySelector('#photoDisplayed img');
                 imageElement.classList.remove('fade-out-200');
-                imageElement.classList.add('fade-in-500');
+                imageElement.classList.add('fade-in-photo');
                 if (this.isFirstLoad) {
                     document.getElementById('blackScreen').remove();
                     this.isFirstLoad = false;
@@ -112,7 +119,7 @@ postXHR('album', {
                 if (this.selectedPhoto !== index) {
                     this.temporizeChangePhoto(this.selectedPhoto, () => {
                         let imageElement = document.querySelector('#photoDisplayed img');
-                        imageElement.classList.remove('fade-in-500');
+                        imageElement.classList.remove('fade-in-photo');
                     });
 
                 }
@@ -162,15 +169,10 @@ postXHR('album', {
                     this.changePhoto(1);
                 });
             },
-            imagePathMini(photoName) {
-                let extension = photoName.split('.').pop();
-                let name = photoName.replace(/\.[^/.]+$/, '') + '_mini';
-                return this.path_mini + name + '.' + extension;
-            },
             temporizeChangePhoto(index, callback = () => {
             }) {
                 let imageElement = document.querySelector('#photoDisplayed img');
-                imageElement.classList.remove('fade-in-500');
+                imageElement.classList.remove('fade-in-photo');
                 imageElement.classList.add('fade-out-200');
                 setTimeout(() => {
                     this.selectedPhoto = index;

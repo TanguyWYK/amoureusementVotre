@@ -23,6 +23,14 @@ function generateMiniPhotos() {
     });
 }
 
+function generateSprites() {
+    postXHR('controls', {
+        action: 'generateSprites',
+    }).then((data) => {
+        console.log(data);
+    });
+}
+
 /**
  * Fonction qui renvoie le svg d'une icône
  *

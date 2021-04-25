@@ -13,6 +13,7 @@ if (!$session->isAuthenticated()) {
 
 if (!empty($_POST)) {
     $Album = new AlbumModel();
+    $FileAction = new FileAction();
     if ($_POST['action'] === 'getCategoryNames') {
         $dirPath = RELATIVE_PATH['storage'] . 'photos_compressed\\';
         $files = array_values(array_diff(scandir($dirPath), array('.', '..')));
@@ -32,9 +33,24 @@ if (!empty($_POST)) {
         $dirPath = RELATIVE_PATH['storage'] . 'photos_compressed\\' . $categoryTitle . '\\';
         $files = array_values(array_diff(scandir($dirPath), array('.', '..')));
         $Response = new stdClass();
-        $Response->path = 'www\storage\photos_compressed\\' . $categoryTitle . '\\';
-        $Response->path_mini = 'www\storage\photos_mini\\' . $categoryTitle . '\\';
         $Response->photos = $files;
+        $Response->path = 'www\storage\photos_compressed\\' . $categoryTitle . '\\';
+        $Response->sprite = 'sprite' . $_POST['albumId'];
+        $Response->path_mini = 'www\storage\photos_mini\\' . $categoryTitle . '\\';
+        $files = $FileAction->getAllFilesInDirectory(RELATIVE_PATH['storage'] . 'photos_mini\\' . $categoryTitle);
+        $miniPhotoMarginLeft = [];
+        $miniPhotoWidth = [];
+        $sumMarginLeft = 0;
+        $w = 0;
+        $marginLeft = 0;
+        foreach ($files as $file) {
+            $sumMarginLeft += $w;
+            $miniPhotoMarginLeft[] = $sumMarginLeft;
+            list($w) = getimagesize(RELATIVE_PATH['storage'] . 'photos_mini\\' . $categoryTitle . '\\' . $file);
+            $miniPhotoWidth[] = $w;
+        }
+        $Response->miniPhotoWidth = $miniPhotoWidth;
+        $Response->miniPhotoMarginLeft = $miniPhotoMarginLeft;
         $Event = new EventModel();
         $Event->addEvent('open_' . $_POST['albumId']);
         header('Content-type: application/json');
