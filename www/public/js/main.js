@@ -152,14 +152,43 @@ function animationEnter() {
 }
 
 /**
- * Action le mode plein écran F11
+ * Active le mode plein écran F11
  *
  * @param {HTMLElement} element
  */
-function requestFullScreen(element) {
+function requestFullScreen(element = document.querySelector('.container')) {
     // Supports most browsers and their versions.
     let requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;
     if (requestMethod) { // Native full screen.
         requestMethod.call(element);
+    }
+}
+
+/**
+ * Désactive le mode plein écran F11
+ *
+ * @param {HTMLElement} element
+ */
+
+/*function exitFullScreen(element= document.querySelector('.container')) {
+    // Supports most browsers and their versions.
+    let requestMethod = element.exitFullScreen || element.webkitExitFullScreen || element.mozCancelFullScreen || element.msExitFullScreen;
+    if (requestMethod) { // Native full screen.
+        requestMethod.call(element);
+    }
+}*/
+
+function exitFullScreen() {
+    if (document.fullscreenElement !== null) { // si pression sur échap
+        if (document.exitFullscreen) {
+            document.exitFullscreen().then(() => {
+            });
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
     }
 }

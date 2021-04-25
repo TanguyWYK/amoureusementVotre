@@ -32,6 +32,7 @@ postXHR('album', {
             diaporama_play: false,
             isFirstLoad: true,
             height: null,
+            isFullScreen: false,
         },
         template: `<div>
                         <div id="photoDisplayed">
@@ -40,11 +41,12 @@ postXHR('album', {
                         <div id="diaporamaControls">
                             <div id="leftButton" @click="beginAlbum">${icons('backward', '12x12')}</div>
                             <div :class="{locked: selectedPhoto===0}" @click="changePhoto(-1)" @mousedown="mouseDownOnButton(-1)" @mouseup="mouseUpOnButton" @mouseleave="mouseUpOnButton">${icons('previous', '12x12')}</div>
-                            <div id="playButton" :class="{played: diaporama_play}" @click="startDiaporama">${icons('play', '12x12')}</div>
+                            <div id="playButton" :class="{selected: diaporama_play}" @click="startDiaporama">${icons('play', '12x12')}</div>
                             <div @click="stopDiaporama">${icons('stop', '12x12')}</div>
                             <div :class="{locked: selectedPhoto===numberOfPhotos-1}" @click="changePhoto(1)" @mousedown="mouseDownOnButton(1)" @mouseup="mouseUpOnButton" @mouseleave="mouseUpOnButton">${icons('next', '12x12')}</div>
                             <div id="homeButton" @click="goToCategories">${icons('home', '12x12')}</div>
                             <div id="rightButton" @click="endAlbum">${icons('forward', '12x12')}</div>
+                            <div id="fullScreenButton" :class="{selected: isFullScreen}" @click="toggleFullScreenMode">${icons('tv', '12x12')}</div>
                         </div>
                         <div id="album_div" :class="{grabbing: isScrolling}" @mousedown="mouseDownOnAlbum" @mousemove="mouseMoveOnAlbum" @mouseup="mouseUpOnAlbum" @mouseleave="mouseUpOnAlbum">
                             <div v-for="(photo,index) in photos" :key="photo.index" 
@@ -81,7 +83,6 @@ postXHR('album', {
         },
         mounted() {
             this.photoIsPreloaded[0] = true; // La première image est chargée à l'affichage
-
             let self = this;
             window.addEventListener('keydown', e => {
                 if (e.key === 'ArrowLeft') {
@@ -100,11 +101,16 @@ postXHR('album', {
         },
         methods: {
             setHeight() {
-                if (this.diaporama_play) {
+                if (this.isFullScreen) {
                     this.height = Math.round(window.innerHeight - 195) + 166 + 'px';
                 } else {
                     this.height = Math.round(window.innerHeight - 195) + 'px';
                 }
+            },
+            imagePathMini(photoName) {
+                let extension = photoName.split('.').pop();
+                let name = photoName.replace(/\.[^/.]+$/, '') + '_mini';
+                return this.path_mini + name + '.' + extension;
             },
             photoIsLoaded() {
                 let imageElement = document.querySelector('#photoDisplayed img');
@@ -212,7 +218,8 @@ postXHR('album', {
             },
             startDiaporama() {
                 if (!this.diaporama_play) {
-                    requestFullScreen(document.querySelector('.container'));
+                    requestFullScreen();
+                    this.isFullScreen = true;
                     this.diaporama_play = true;
                     this.setHeight();
                     let iconElement = document.querySelector('#playButton svg')
@@ -231,9 +238,12 @@ postXHR('album', {
                 let iconElement = document.querySelector('#playButton svg')
                 iconElement.classList.add('i_12x12');
                 iconElement.classList.remove('i_11x11');
-                this.diaporama_play = false;
-                this.setHeight();
                 clearInterval(this.timer);
+                if (this.isFullScreen && this.diaporama_play) {
+                    this.exitFullscreen();
+                }
+                this.setHeight();
+                this.diaporama_play = false;
             },
             mouseDownOnAlbum() {
                 this.scroll = true;
@@ -298,6 +308,26 @@ postXHR('album', {
                     albumElement.scrollLeft = (this.numberOfPhotos - 1) * 152;
                 });
             },
+            toggleFullScreenMode() {
+                this.isFullScreen = !this.isFullScreen;
+                if (this.isFullScreen) {
+                    let iconElement = document.querySelector('#fullScreenButton svg');
+                    requestFullScreen();
+                    this.setHeight();
+                    iconElement.classList.add('i_11x11');
+                    iconElement.classList.remove('i_12x12');
+                } else {
+                    this.exitFullscreen();
+                }
+            },
+            exitFullscreen() {
+                let iconElement = document.querySelector('#fullScreenButton svg');
+                exitFullScreen();
+                this.setHeight();
+                iconElement.classList.remove('i_11x11');
+                iconElement.classList.add('i_12x12');
+                this.isFullScreen = false;
+            }
         }
     });
 });

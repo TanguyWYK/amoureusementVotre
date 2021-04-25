@@ -84,7 +84,6 @@ class FileAction
             }
             $image = imagescale($image, $finalWidthLayer, $finalHeightLayer);
             imagejpeg($image, $image_target_path, $quality);
-
         }
     }
 

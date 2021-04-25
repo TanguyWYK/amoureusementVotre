@@ -37,9 +37,7 @@ if (!empty($_POST) && $session->isAdmin()) {
         $directories = array_diff(scandir($dirPath), array('.', '..'));
         ini_set('max_execution_time', 3600);
         foreach ($directories as $directory) {
-            if ($directory === '08-Corbeille') {
-                $FileAction->generateSprite($dirPath . '/' . $directory);
-            }
+            $FileAction->generateSprite($dirPath . '/' . $directory);
         }
         echo 'sprites done';
     }

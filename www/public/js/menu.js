@@ -7,9 +7,11 @@ let menu = new Vue({
     },
     template: `<nav id="navBar">
                 <ul>
-                <li id="logoutButton" @click="logout" title="Sortie">
-                    <img src="www/public/images/site/pop_corn.png" width="100px">       
-                </li>
+                    <li>
+                        <div id="logoutButton" @click="logout">
+                            <span>Sortie</span>
+                        </div>
+                    </li>
                 </ul>     
                </nav>`,
     methods: {

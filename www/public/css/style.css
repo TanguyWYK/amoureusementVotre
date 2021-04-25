@@ -144,7 +144,7 @@ main, body {
 }
 
 #album_div > div {
-    opacity: 0.5;
+    opacity: 0.7;
     min-width: 140px;
     display: flex;
     justify-content: space-around;
@@ -259,7 +259,7 @@ main, body {
     cursor: not-allowed;
 }
 
-#diaporamaControls .played {
+#diaporamaControls .selected {
     color: #551212;
     background-color: pink;
     box-shadow: inset 1px 1px 1px grey, inset -1px -1px 1px grey, inset 1px -1px 1px grey, inset -1px 1px 1px grey;
@@ -309,33 +309,6 @@ main, body {
 #homeButton {
     position: absolute;
     left: 120px;
-}
-
-#logoutButton {
-    position: relative;
-}
-
-#logoutButton:hover {
-    cursor: pointer;
-}
-
-#logoutButton img {
-    position: relative;
-    z-index: 2;
-}
-
-
-#logoutButton:hover::before {
-    position: absolute;
-    top: 20px;
-    left: 30px;
-    background-color: red;
-    box-shadow: 0 0 40px red;
-    z-index: 1;
-    width: 40px;
-    height: 80px;
-    border-radius: 50%;
-    content: "";
 }
 
 .icons {
@@ -558,4 +531,67 @@ h1 {
     src: url(../fonts/LibreBarcode39-Regular.ttf) format("truetype");
     font-weight: 400;
     font-display: swap;
+}
+
+@font-face {
+    font-family: 'Vibur';
+    src: url(../fonts/Vibur.woff2) format("woff2");
+    font-weight: 400;
+    font-display: swap;
+}
+
+#logoutButton {
+    user-select: none;
+    cursor: pointer;
+}
+
+#logoutButton:hover {
+    text-shadow: 0 -80px 100px, 0 0 2px, 0 0 1em #ff4444, 0 0 0.5em #ff4444, 0 0 0.1em #ff4444, 0 20px 3px #000;
+}
+
+#logoutButton {
+    font-family: "Vibur", sans-serif;
+    font-size: 50px;
+    color: #fee;
+    font-weight: 400;
+    text-shadow: 0 -40px 100px, 0 0 2px, 0 0 1em #ff4444, 0 0 0.5em #ff4444, 0 0 0.1em #ff4444, 0 10px 3px #000;
+    transition-duration: 1.5s;
+}
+
+#logoutButton span {
+    animation: blink linear infinite 5s;
+}
+
+@keyframes blink {
+    78% {
+        color: inherit;
+        text-shadow: inherit;
+    }
+    79% {
+        color: #333;
+    }
+    80% {
+
+        text-shadow: none;
+    }
+    81% {
+        color: inherit;
+        text-shadow: inherit;
+    }
+    82% {
+        color: #333;
+        text-shadow: none;
+    }
+    83% {
+        color: inherit;
+        text-shadow: inherit;
+    }
+    92% {
+        color: #333;
+        text-shadow: none;
+    }
+    92.5% {
+        color: inherit;
+        text-shadow: inherit;
+    }
 }
