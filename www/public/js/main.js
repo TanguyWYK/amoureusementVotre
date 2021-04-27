@@ -167,17 +167,7 @@ function requestFullScreen(element = document.querySelector('.container')) {
 /**
  * Désactive le mode plein écran F11
  *
- * @param {HTMLElement} element
  */
-
-/*function exitFullScreen(element= document.querySelector('.container')) {
-    // Supports most browsers and their versions.
-    let requestMethod = element.exitFullScreen || element.webkitExitFullScreen || element.mozCancelFullScreen || element.msExitFullScreen;
-    if (requestMethod) { // Native full screen.
-        requestMethod.call(element);
-    }
-}*/
-
 function exitFullScreen() {
     if (document.fullscreenElement !== null) { // si pression sur échap
         if (document.exitFullscreen) {

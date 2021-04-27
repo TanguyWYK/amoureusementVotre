@@ -33,6 +33,7 @@ postXHR('album', {
             isFirstLoad: true,
             height: null,
             isFullScreen: false,
+            photoIsLoading: true,
         },
         template: `<div>
                         <div id="photoDisplayed">
@@ -120,6 +121,7 @@ postXHR('album', {
                     document.getElementById('blackScreen').remove();
                     this.isFirstLoad = false;
                 }
+                this.photoIsLoading = false;
             },
             animatePhotoOpening(index) {
                 if (this.selectedPhoto !== index) {
@@ -214,6 +216,7 @@ postXHR('album', {
                     let albumElement = document.getElementById('album_div');
                     albumElement.scrollLeft = albumElement.scrollLeft + photoSelected.getBoundingClientRect().left + offsetX - 3 * 152 + direction;
                 }
+                this.photoIsLoading = true;
                 this.preloadTwoPhotos();
             },
             startDiaporama() {
@@ -226,10 +229,12 @@ postXHR('album', {
                     iconElement.classList.add('i_11x11');
                     iconElement.classList.remove('i_12x12');
                     this.timer = setInterval(() => {
-                        if (this.selectedPhoto < this.numberOfPhotos - 1) {
-                            this.changePhoto(1);
-                        } else {
-                            this.stopDiaporama();
+                        if (!this.photoIsLoading) {
+                            if (this.selectedPhoto < this.numberOfPhotos - 1) {
+                                this.changePhoto(1);
+                            } else {
+                                this.stopDiaporama();
+                            }
                         }
                     }, TIME_NORMAL_CHANGE);
                 }

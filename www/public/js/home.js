@@ -8,14 +8,18 @@ postXHR('album', {
         data: {
             path: RELATIVE_PATH.storage + 'photos_category/',
             repertories: data,
+            categorySelected: null,
         },
         template: `<div id="categoryPhoto_div">
-                    <div v-for="(repertory,index) in repertories" :key="repertory.index" class="categoryPhoto" @click="openCategory(index)">
-                    <div class="category_div">
-                    <img :src="imagePath(repertory)" width="auto" height="200px" @mouseout="changeAnglePolaroid(index)">
-                    <p class="category_p">{{ categoryTitle(repertory.title) }}</p>
-                    </div>
-                    </div>
+                        <div v-for="(repertory,index) in repertories" :key="repertory.index" class="categoryPhoto">
+                            <div class="category_div">
+                                <img :src="imagePath(repertory)" :class="{displayed: index === categorySelected}" width="auto" height="200px">
+                                <div class="wrapper" @click="openCategory(index)" @mouseover="showCategoryImage(index) "@mouseout="changeAnglePolaroid(index)">
+                                   <div class="category_background"></div> 
+                                   <p class="category_p">{{ categoryTitle(repertory.title) }}</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>`,
         methods: {
             imagePath(repertory) {
@@ -28,12 +32,16 @@ postXHR('album', {
                 window.location.href = 'album' + index;
             },
             changeAnglePolaroid(index) {
+                this.categorySelected = null;
                 document.querySelectorAll('.category_div img')
                     .forEach((element, key) => {
                         if (key !== index) {
                             element.style.setProperty('--angle-polaroid', Math.round(Math.random() * 4 - 1) + 'deg');
                         }
                     });
+            },
+            showCategoryImage(index) {
+                this.categorySelected = index;
             }
         }
     });

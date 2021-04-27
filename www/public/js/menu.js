@@ -9,7 +9,7 @@ let menu = new Vue({
                 <ul>
                     <li>
                         <div id="logoutButton" @click="logout">
-                            <span>Sortie</span>
+                            <span>Sor<span class="blink">t</span>ie</span>
                         </div>
                     </li>
                 </ul>     

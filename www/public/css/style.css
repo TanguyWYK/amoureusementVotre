@@ -1,6 +1,8 @@
 :root {
     --button-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
     --angle-polaroid: 1deg;
+    --category-color: rgb(196, 0, 30);
+/ / #9911AA;
 }
 
 .container {
@@ -115,8 +117,7 @@ main, body {
     display: flex;
     flex-wrap: wrap;
     max-width: 1200px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: auto;
 }
 
 #categoryBackground {
@@ -132,15 +133,67 @@ main, body {
     text-align: center;
     margin-bottom: 10px;
     background-image: url(../images/site/film.png);
-    background-size: 150px;
+    background-size: 160px;
     background-position: center;
     background-repeat: no-repeat;
 }
 
+.wrapper {
+    display: inline-block;
+    text-align: center;
+    padding: 4px 10px;
+    font-size: 24px;
+    color: var(--category-color);
+    border: 3px solid var(--category-color);
+    font-family: sans-serif;
+    background-color: #f5f5f5;
+    font-weight: 700;
+    box-shadow: 5px 5px 0 #666;
+    transition-duration: 0.3s;
+    cursor: pointer;
+    position: relative;
+}
+
 .category_p {
     margin: 0;
-    color: white;
+    z-index: 2;
+    letter-spacing: 2px;
+    position: relative;
+}
+
+.wrapper:hover .category_p {
+    color: #f5f5f5;
+}
+
+.category_background {
+    z-index: 0;
+    display: inline-block;
+    width: 0;
+    background-color: var(--category-color);
+    height: 100%;
     position: absolute;
+    left: 0;
+    top: 0;
+    animation-duration: 0.2s;
+}
+
+@keyframes loading {
+    0% {
+        width: 0;
+        opacity: 0;
+    }
+    100% {
+        width: 100%;
+        opacity: 1;
+    }
+}
+
+.wrapper:hover {
+    box-shadow: 2px 2px 0 #666;
+}
+
+.wrapper:hover .category_background {
+    animation: loading 0.2s linear forwards;
 }
 
 #album_div > div {
@@ -222,25 +275,21 @@ main, body {
 
 .category_div img {
     opacity: 0;
+    margin: 20px 0;
     background: ghostwhite;
     display: inline-block;
     text-align: center;
     text-decoration: none;
     padding: 10px 10px 30px;
-    color: #8b8b8b;
     box-shadow: 0 1px 5px 0 #656565;
     transform: rotate(var(--angle-polaroid));
     filter: alpha(opacity=85);
     border: 1px solid #c9c9c9;
 }
 
-.category_div img:hover {
+.category_div img.displayed {
     transition: all .5s ease-in-out;
     opacity: 1;
-}
-
-.category_div:hover {
-    cursor: pointer;
 }
 
 #photoDisplayed {
@@ -512,54 +561,26 @@ h1 {
     margin: 10px 8px;
 }
 
-@font-face {
-    font-family: Roboto;
-    src: url(../fonts/Roboto-Regular.woff2) format("woff2");
-    font-weight: 400;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Fascinate Inline';
-    src: url(../fonts/Fascinate-inline.woff2) format("woff2");
-    font-weight: 400;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Libre Barcode';
-    src: url(../fonts/LibreBarcode39-Regular.ttf) format("truetype");
-    font-weight: 400;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Vibur';
-    src: url(../fonts/Vibur.woff2) format("woff2");
-    font-weight: 400;
-    font-display: swap;
-}
-
-#logoutButton {
-    user-select: none;
-    cursor: pointer;
-}
-
 #logoutButton:hover {
-    text-shadow: 0 -80px 100px, 0 0 2px, 0 0 1em #ff4444, 0 0 0.5em #ff4444, 0 0 0.1em #ff4444, 0 20px 3px #000;
+    animation: blink linear infinite 0.9s;
+}
+
+#logoutButton span:hover {
+    animation: blink linear 4 0.2s;
 }
 
 #logoutButton {
+    cursor: pointer;
     font-family: "Vibur", sans-serif;
     font-size: 50px;
     color: #fee;
     font-weight: 400;
-    text-shadow: 0 -40px 100px, 0 0 2px, 0 0 1em #ff4444, 0 0 0.5em #ff4444, 0 0 0.1em #ff4444, 0 10px 3px #000;
-    transition-duration: 1.5s;
+    text-shadow: 0 -40px 100px, 0 0 2px, 0 0 1em #ff4444, 0 0 0.5em #ff4444, 0 0 0.1em #ff4444, 0 5px 3px #000;
+    transition-duration: 0.1s;
 }
 
-#logoutButton span {
-    animation: blink linear infinite 5s;
+#logoutButton .blink {
+    animation: blink linear infinite 12s;
 }
 
 @keyframes blink {
@@ -594,4 +615,32 @@ h1 {
         color: inherit;
         text-shadow: inherit;
     }
+}
+
+@font-face {
+    font-family: Roboto;
+    src: url(../fonts/Roboto-Regular.woff2) format("woff2");
+    font-weight: 400;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Fascinate Inline';
+    src: url(../fonts/Fascinate-inline.woff2) format("woff2");
+    font-weight: 400;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Libre Barcode';
+    src: url(../fonts/LibreBarcode39-Regular.ttf) format("truetype");
+    font-weight: 400;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Vibur';
+    src: url(../fonts/Vibur.woff2) format("woff2");
+    font-weight: 400;
+    font-display: swap;
 }
