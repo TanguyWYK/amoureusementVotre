@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="Description" content="Ici le contenu">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="www/public/images/site/favicon-32x32.png">
-    <link rel="stylesheet" type="text/css" href="www/public/css/style.css"/>
+    <link rel="shortcut icon" href="<?= RELATIVE_PATH['images']?>site/favicon-32x32.png">
+    <link rel="stylesheet" type="text/css" href="<?= RELATIVE_PATH['css']?>style.css">
     <title>Amoureusement Vôtre</title>
 </head>
 <body>
@@ -20,13 +20,13 @@
 <footer>
 
 </footer>
-<script src="www/public/js/libraries/vueV2.6.12.js"></script>
-<script src="www/public/js/main.js"></script>
+<script src="<?= RELATIVE_PATH['js']?>libraries/vue@2.6.0.js"></script>
+<script src="<?= RELATIVE_PATH['js']?>main.js"></script>
 <?php if ($menu === 'home'): ?>
-    <script src="www/public/js/menu.js"></script>
-    <script src="www/public/js/home.js"></script>
+    <script src="<?= RELATIVE_PATH['js']?>menu.js"></script>
+    <script src="<?= RELATIVE_PATH['js']?>home.js"></script>
 <?php elseif ($menu === 'album'): ?>
-    <script src="www/public/js/album.js"></script>
+    <script src="<?= RELATIVE_PATH['js']?>album.js"></script>
 <?php endif; ?>
 </body>
 </html>

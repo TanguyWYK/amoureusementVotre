@@ -11,7 +11,6 @@ if (!empty($_POST)) {
         $Event = new EventModel();
         if (password_verify($password, $correct_password)) {
             $User = new UserModel();
-            $Login = new LoginModel();
             $email = $_POST['email'];
             $user = $User->getUserByEmail($email);
             if (empty($user)) {
@@ -20,7 +19,9 @@ if (!empty($_POST)) {
             }
             $session->create($user);
             $Event->addEvent('login_' . $session->getId());
+            header('Content-type: application/json');
             echo json_encode(true);
+            exit();
         } else {
             $Event->addEvent('wrong_password');
             header('Content-type: application/json');

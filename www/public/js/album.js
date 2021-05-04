@@ -63,7 +63,7 @@ postXHR('album', {
                    </div>`,
         computed: {
             photoSelectedPath() {
-                return this.path + this.photos[this.selectedPhoto];
+                return RELATIVE_PATH['storage'] + this.path + this.photos[this.selectedPhoto];
             },
             getSelectedPhoto() {
                 return this.selectedPhoto;
@@ -79,7 +79,7 @@ postXHR('album', {
                 return svgString;
             },
             imagePathSprite() {
-                return this.path_mini + 'sprite.jpg';
+                return RELATIVE_PATH['storage'] + this.path_mini + 'sprite.jpg';
             },
         },
         mounted() {
@@ -111,7 +111,7 @@ postXHR('album', {
             imagePathMini(photoName) {
                 let extension = photoName.split('.').pop();
                 let name = photoName.replace(/\.[^/.]+$/, '') + '_mini';
-                return this.path_mini + name + '.' + extension;
+                return RELATIVE_PATH['storage'] + this.path_mini + name + '.' + extension;
             },
             photoIsLoaded() {
                 let imageElement = document.querySelector('#photoDisplayed img');
@@ -145,7 +145,7 @@ postXHR('album', {
                 let photoToPreloadId = this.findNextPhotoToPreload();
                 if (photoToPreloadId !== -1) { // sinon tout est déjà chargé
                     let image = new Image();
-                    image.src = this.path + this.photos[photoToPreloadId];
+                    image.src = RELATIVE_PATH['storage'] + this.path + this.photos[photoToPreloadId];
                     this.photoIsPreloaded[photoToPreloadId] = true;
                     callback();
                 } else {

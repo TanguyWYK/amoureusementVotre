@@ -23,7 +23,7 @@ class UserModel
     public function getUserByEmail($email)
     {
         include RELATIVE_PATH['database'] . 'connection.php';
-        $query = $db->prepare("SELECT id,email FROM users
+        $query = $db->prepare("SELECT id,email FROM " . $db_prefix . "users
                                 WHERE email=?");
         $query->execute([
             $email
@@ -34,7 +34,7 @@ class UserModel
     public function getUserById($email)
     {
         include RELATIVE_PATH['database'] . 'connection.php';
-        $query = $db->prepare("SELECT id,email FROM users
+        $query = $db->prepare("SELECT id,email FROM " . $db_prefix . "users
                                 WHERE email=?");
         $query->execute([
             $email

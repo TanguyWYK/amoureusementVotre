@@ -6,7 +6,7 @@ class AlbumModel
     function getMiniPhotoByCategoryTitle($title)
     {
         include RELATIVE_PATH['database'] . 'connection.php';
-        $query = $db->prepare("SELECT name_photo FROM category_image 
+        $query = $db->prepare("SELECT name_photo FROM " . $db_prefix . "category_image 
 					           WHERE category_title=?");
         $query->execute([
             $title
@@ -17,7 +17,7 @@ class AlbumModel
     function getAlbumTitleByCategoryId($id)
     {
         include RELATIVE_PATH['database'] . 'connection.php';
-        $query = $db->prepare("SELECT category_title FROM category_image 
+        $query = $db->prepare("SELECT category_title FROM " . $db_prefix . "category_image 
 					           WHERE id=?");
         $query->execute([
             $id

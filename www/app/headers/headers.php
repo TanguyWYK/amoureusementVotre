@@ -2,6 +2,7 @@
 
 /* Definition des chemins relatif et absolu */
 define('ABSOLUTE_PATH', substr(__DIR__, 0, -11));
+const DIRECTORY_SITE = 'www/';
 const RELATIVE_PATH = [
     'controllers' => ABSOLUTE_PATH . 'app/controllers/',
     'models' => ABSOLUTE_PATH . 'app/models/',
@@ -10,11 +11,13 @@ const RELATIVE_PATH = [
     'headers' => ABSOLUTE_PATH . 'app/headers/',
     'database' => ABSOLUTE_PATH . 'app/database/',
     'storage' => ABSOLUTE_PATH . 'storage/',
+    'css' => DIRECTORY_SITE . 'public/css/',
+    'images' => DIRECTORY_SITE . 'public/images/',
+    'js' => DIRECTORY_SITE . 'public/js/',
 ];
 
 
 /* Include des modèles */
-include RELATIVE_PATH['models'] . 'LoginModel.php';
 include RELATIVE_PATH['models'] . 'UserModel.php';
 include RELATIVE_PATH['models'] . 'AlbumModel.php';
 include RELATIVE_PATH['models'] . 'EventModel.php';

@@ -1,35 +1,11 @@
 'use strict';
+const DIRECTORY_SITE = 'www/';
 
 const RELATIVE_PATH = {
-    controllers: 'www/app/controllers/',
-    views: 'www/app/views/',
-    icons: 'www/public/icons/',
-    storage: 'www/storage/',
+    controllers:DIRECTORY_SITE + 'app/controllers/',
+    icons: DIRECTORY_SITE + 'public/icons/',
+    storage: DIRECTORY_SITE + 'storage/',
 };
-
-function renameFiles() {
-    postXHR('controls', {
-        action: 'renameFiles',
-    }).then((data) => {
-        console.log(data);
-    });
-}
-
-function generateMiniPhotos() {
-    postXHR('controls', {
-        action: 'generateMiniPhotos',
-    }).then((data) => {
-        console.log(data);
-    });
-}
-
-function generateSprites() {
-    postXHR('controls', {
-        action: 'generateSprites',
-    }).then((data) => {
-        console.log(data);
-    });
-}
 
 /**
  * Fonction qui renvoie le svg d'une icône
@@ -42,21 +18,7 @@ function icons(name, dimensions) {
     return '<svg class="icons i_' + dimensions + '" role="img"><use xlink:href="' + RELATIVE_PATH.icons + 'fonts-defs.svg#' + name + '"></use></svg>'
 }
 
-
-window.addEventListener('load', () => {
-    let waitElement = document.getElementById('wait_loading');
-    if (waitElement) waitElement.remove();
-    document.addEventListener('click', () => {
-        let ticketElement = document.getElementById('ticket');
-        if (ticketElement) {
-            ticketElement.classList.add('slide-up');
-        }
-    }, false);
-}, false);
-
-
 /**
- * Fonction qui effectue la requête post en replacement de la $.post de jquery
  *
  * @param {string} controller
  * @param {Object} parameters
@@ -78,12 +40,6 @@ function postXHR(controller, parameters = {}) {
     });
 }
 
-/**
- * Fonction qui transforme un objet en encodeURI pour envoi en post vers le serveur
- *
- * @param {{}} data
- * @return {string}
- */
 function encodeURIObject(data) {
     let keys = Object.keys(data);
     let response = '';
@@ -137,10 +93,6 @@ function showErrorMessage(errorMessage, errorElement) {
     setTimeout(() => errorElement.classList.remove('fade-in-400'), 500);
 }
 
-/**
- * Fonction qui fait la scène d'introduction
- *
- */
 function animationEnter() {
     document.getElementById('ticket').classList.remove('slide-up');
     document.getElementById('cinema_background').classList.add('zoom-inside');
@@ -151,12 +103,8 @@ function animationEnter() {
     }, 4000);
 }
 
-/**
- * Active le mode plein écran F11
- *
- * @param {HTMLElement} element
- */
-function requestFullScreen(element = document.querySelector('.container')) {
+function requestFullScreen() {
+    let element = document.querySelector('.container');
     // Supports most browsers and their versions.
     let requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;
     if (requestMethod) { // Native full screen.
@@ -164,10 +112,6 @@ function requestFullScreen(element = document.querySelector('.container')) {
     }
 }
 
-/**
- * Désactive le mode plein écran F11
- *
- */
 function exitFullScreen() {
     if (document.fullscreenElement !== null) { // si pression sur échap
         if (document.exitFullscreen) {
@@ -182,3 +126,38 @@ function exitFullScreen() {
         }
     }
 }
+
+function renameFiles() {
+    postXHR('controls', {
+        action: 'renameFiles',
+    }).then((data) => {
+        console.log(data);
+    });
+}
+
+function generateMiniPhotos() {
+    postXHR('controls', {
+        action: 'generateMiniPhotos',
+    }).then((data) => {
+        console.log(data);
+    });
+}
+
+function generateSprites() {
+    postXHR('controls', {
+        action: 'generateSprites',
+    }).then((data) => {
+        console.log(data);
+    });
+}
+
+window.addEventListener('load', () => {
+    let waitElement = document.getElementById('wait_loading');
+    if (waitElement) waitElement.remove();
+    document.addEventListener('click', () => {
+        let ticketElement = document.getElementById('ticket');
+        if (ticketElement) {
+            ticketElement.classList.add('slide-up');
+        }
+    }, false);
+}, false);

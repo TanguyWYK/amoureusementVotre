@@ -2,7 +2,6 @@
     --button-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
     --angle-polaroid: 1deg;
     --category-color: rgb(196, 0, 30);
-/ / #9911AA;
 }
 
 .container {
@@ -207,35 +206,31 @@ main, body {
 }
 
 .sprite1 {
-    background-image: url(../../storage/photos_mini/01-Strasbourg_mairie/sprite.jpg);
+    background-image: url(../../storage/photos_mini/01-Strasbourg/sprite.jpg);
 }
 
 .sprite2 {
-    background-image: url(../../storage/photos_mini/02-Strasbourg_soirée/sprite.jpg);
+    background-image: url(../../storage/photos_mini/02-Aubiac_eglise/sprite.jpg);
 }
 
 .sprite3 {
-    background-image: url(../../storage/photos_mini/03-Aubiac_église/sprite.jpg);
+    background-image: url(../../storage/photos_mini/03-Aubiac_après-midi/sprite.jpg);
 }
 
 .sprite4 {
-    background-image: url(../../storage/photos_mini/04-Aubiac_après-midi/sprite.jpg);
+    background-image: url(../../storage/photos_mini/04-Aubiac_soirée/sprite.jpg);
 }
 
 .sprite5 {
-    background-image: url(../../storage/photos_mini/05-Aubiac_soirée/sprite.jpg);
+    background-image: url(../../storage/photos_mini/05-Photobooth/sprite.jpg);
 }
 
 .sprite6 {
-    background-image: url(../../storage/photos_mini/06-Photobooth/sprite.jpg);
+    background-image: url(../../storage/photos_mini/06-Riedisheim/sprite.jpg);
 }
 
 .sprite7 {
-    background-image: url(../../storage/photos_mini/07-Riedisheim/sprite.jpg);
-}
-
-.sprite8 {
-    background-image: url(../../storage/photos_mini/08-Corbeille/sprite.jpg);
+    background-image: url(../../storage/photos_mini/07-Corbeille/sprite.jpg);
 }
 
 #album_div.grabbing {
@@ -372,19 +367,9 @@ main, body {
     height: 12px;
 }
 
-.i_10x10 {
-    width: 10px;
-    height: 10px;
-}
-
 .i_11x11 {
     width: 11px;
     height: 11px;
-}
-
-.i_26x26 {
-    width: 26px;
-    height: 26px;
 }
 
 .i_40x40 {
@@ -403,16 +388,15 @@ main, body {
 }
 
 .fade-in-400 {
-    opacity: 0;
     animation: fade-in 0.4s ease-out forwards;
 }
 
 @keyframes fade-in {
     0% {
-        opacity: 0;
+        color: white;
     }
     100% {
-        opacity: 1;
+        color: #D8000C;
     }
 }
 
