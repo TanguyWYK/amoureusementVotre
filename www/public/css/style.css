@@ -110,6 +110,7 @@ main, body {
     flex-direction: row;
     justify-content: space-between;
     overflow-x: hidden;
+    user-select: none;
 }
 
 #categoryPhoto_div {
@@ -627,4 +628,44 @@ h1 {
     src: url(../fonts/Vibur.woff2) format("woff2");
     font-weight: 400;
     font-display: swap;
+}
+
+@media screen and (max-width: 680px) {
+    #album_div {
+        display: none;
+    }
+
+    #photoDisplayed {
+        height: calc(100vh - 30px);
+        overflow: hidden;
+    }
+
+    #photoDisplayed img {
+        height: auto;
+        width: auto;
+        max-width: 100vw;
+        max-height: 100vh;
+    }
+
+    #diaporamaControls {
+        justify-content: space-around;
+    }
+
+    #diaporamaControls #leftButton, #diaporamaControls #rightButton {
+        display: none;
+    }
+
+    #diaporamaControls div {
+        width: 30px;
+    }
+
+    #homeButton {
+        position: inherit;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    #diaporamaControls div {
+        width: 50px;
+    }
 }

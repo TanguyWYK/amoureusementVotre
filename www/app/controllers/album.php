@@ -56,18 +56,20 @@ if (!empty($_POST)) {
         header('Content-type: application/json');
         echo json_encode($Response);
     } elseif ($_POST['action'] === 'deletePhoto') {
-        $old_path = ABSOLUTE_PATH . '/' . $_POST['path'];
-        if (file_exists($old_path)) {
-            // Photo taille normale
+        if($session->isAdmin()) {
             $old_path = ABSOLUTE_PATH . '/' . $_POST['path'];
-            $parts = explode("/", $_POST['path']);
-            $new_path = ABSOLUTE_PATH . '/' . $parts[0] . '/' . $parts[1] . '/' . '07-Corbeille' . '/' . $parts[3];
-            rename($old_path, $new_path);
-            // Photo miniature
-            $old_path_mini = ABSOLUTE_PATH . '/' . $_POST['path_mini'];
-            $parts_mini = explode("/", $_POST['path_mini']);
-            $new_path_mini = ABSOLUTE_PATH . '/' . $parts_mini[0] . '/' . $parts_mini[1] . '/' . '07-Corbeille' . '/' . $parts_mini[3];
-            rename($old_path_mini, $new_path_mini);
+            if (file_exists($old_path)) {
+                // Photo taille normale
+                $old_path = ABSOLUTE_PATH . '/' . $_POST['path'];
+                $parts = explode("/", $_POST['path']);
+                $new_path = ABSOLUTE_PATH . '/' . $parts[0] . '/' . $parts[1] . '/' . '07-Corbeille' . '/' . $parts[3];
+                rename($old_path, $new_path);
+                // Photo miniature
+                $old_path_mini = ABSOLUTE_PATH . '/' . $_POST['path_mini'];
+                $parts_mini = explode("/", $_POST['path_mini']);
+                $new_path_mini = ABSOLUTE_PATH . '/' . $parts_mini[0] . '/' . $parts_mini[1] . '/' . '07-Corbeille' . '/' . $parts_mini[3];
+                rename($old_path_mini, $new_path_mini);
+            }
         }
     }
     exit();

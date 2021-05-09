@@ -34,6 +34,7 @@ postXHR('album', {
             height: null,
             isFullScreen: false,
             photoIsLoading: true,
+            isTouchPad: false,
         },
         template: `<div>
                         <div id="photoDisplayed">
@@ -41,10 +42,10 @@ postXHR('album', {
                         </div>
                         <div id="diaporamaControls">
                             <div id="leftButton" @click="beginAlbum">${icons('backward', '12x12')}</div>
-                            <div :class="{locked: selectedPhoto===0}" @click="changePhoto(-1)" @mousedown="mouseDownOnButton(-1)" @mouseup="mouseUpOnButton" @mouseleave="mouseUpOnButton">${icons('previous', '12x12')}</div>
+                            <div :class="{locked: selectedPhoto===0}" @click="changePhoto(-1)" @touchstart="touchStart(-1)" @touchend="touchEnd()" @mousedown="mouseDownOnButton(-1)" @mouseup="mouseUpOnButton" @mouseleave="mouseUpOnButton">${icons('previous', '12x12')}</div>
                             <div id="playButton" :class="{selected: diaporama_play}" @click="startDiaporama">${icons('play', '12x12')}</div>
                             <div @click="stopDiaporama">${icons('stop', '12x12')}</div>
-                            <div :class="{locked: selectedPhoto===numberOfPhotos-1}" @click="changePhoto(1)" @mousedown="mouseDownOnButton(1)" @mouseup="mouseUpOnButton" @mouseleave="mouseUpOnButton">${icons('next', '12x12')}</div>
+                            <div :class="{locked: selectedPhoto===numberOfPhotos-1}" @click="changePhoto(1)" @touchstart="touchStart(1)" @touchend="touchEnd()" @mousedown="mouseDownOnButton(1)" @mouseup="mouseUpOnButton" @mouseleave="mouseUpOnButton">${icons('next', '12x12')}</div>
                             <div id="homeButton" @click="goToCategories">${icons('home', '12x12')}</div>
                             <div id="rightButton" @click="endAlbum">${icons('forward', '12x12')}</div>
                             <div id="fullScreenButton" :class="{selected: isFullScreen}" @click="toggleFullScreenMode">${icons('tv', '12x12')}</div>
@@ -188,7 +189,6 @@ postXHR('album', {
                 }, TIME_FADE_OUT);
             },
             openPhoto(index) {
-                //this.animatePhotoOpening(index);
                 this.photoIsPreloaded[index] = true;
                 this.temporizeChangePhoto(index);
             },
@@ -279,10 +279,23 @@ postXHR('album', {
                 this.isScrolling = false;
             },
             mouseDownOnButton(change) {
+                if (!this.isTouchPad) {
+                    this.clickButton_change = change;
+                    this.clickButton_time = Date.now();
+                    this.isButtonDown = true;
+                    setTimeout(this.testIfLongClick.bind(this), TIME_LONG_CLICK);
+                }
+            },
+            touchStart(change) {
+                this.isTouchPad = true;
                 this.clickButton_change = change;
                 this.clickButton_time = Date.now();
                 this.isButtonDown = true;
                 setTimeout(this.testIfLongClick.bind(this), TIME_LONG_CLICK);
+            },
+            touchEnd() {
+                this.clickButton_time = Date.now();
+                this.isButtonDown = false;
             },
             testIfLongClick() {
                 let timestamp = Date.now();
@@ -298,8 +311,10 @@ postXHR('album', {
                 }
             },
             mouseUpOnButton() {
-                this.clickButton_time = Date.now();
-                this.isButtonDown = false;
+                if (!this.isTouchPad) {
+                    this.clickButton_time = Date.now();
+                    this.isButtonDown = false;
+                }
             },
             beginAlbum() {
                 this.temporizeChangePhoto(0, () => {
