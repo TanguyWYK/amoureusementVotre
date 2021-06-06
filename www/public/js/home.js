@@ -13,7 +13,7 @@ postXHR('album', {
         template: `<div id="categoryPhoto_div">
                         <div v-for="(repertory,index) in repertories" :key="repertory.index" class="categoryPhoto">
                             <div class="category_div">
-                                <img :src="imagePath(repertory)" :class="{displayed: index === categorySelected}" width="auto" height="200px">
+                                <img :src="imagePath(repertory)" :class="{displayed: index === categorySelected}" width="auto" height="200px" @touchend="openCategory(index)">
                                 <div class="wrapper" @click="openCategory(index)" @mouseover="showCategoryImage(index) "@mouseout="changeAnglePolaroid(index)">
                                    <div class="category_background"></div> 
                                    <p class="category_p">{{ categoryTitle(repertory.title) }}</p>

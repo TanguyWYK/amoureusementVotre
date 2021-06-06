@@ -2,6 +2,7 @@
     --button-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
     --angle-polaroid: 1deg;
     --category-color: rgb(196, 0, 30);
+    --margin-top-ticket: 15%;
 }
 
 .container {
@@ -211,28 +212,21 @@ main, body {
 }
 
 .sprite2 {
-    background-image: url(../../storage/photos_mini/02-Aubiac_eglise/sprite.jpg);
+    background-image: url(../../storage/photos_mini/02-Eglise%20Moirax/sprite.jpg);
 }
 
 .sprite3 {
-    background-image: url(../../storage/photos_mini/03-Aubiac_après-midi/sprite.jpg);
-}
-
-.sprite4 {
-    background-image: url(../../storage/photos_mini/04-Aubiac_soirée/sprite.jpg);
+    background-image: url(../../storage/photos_mini/03-Château%20Aubiac/sprite.jpg);
 }
 
 .sprite5 {
-    background-image: url(../../storage/photos_mini/05-Photobooth/sprite.jpg);
+    background-image: url(../../storage/photos_mini/04-Photobooth/sprite.jpg);
 }
 
 .sprite6 {
-    background-image: url(../../storage/photos_mini/06-Riedisheim/sprite.jpg);
+    background-image: url(../../storage/photos_mini/05-Riedisheim/sprite.jpg);
 }
 
-.sprite7 {
-    background-image: url(../../storage/photos_mini/07-Corbeille/sprite.jpg);
-}
 
 #album_div.grabbing {
     cursor: grabbing;
@@ -419,6 +413,20 @@ main, body {
     }
 }
 
+@keyframes zoom-inside-smartphone {
+    0% {
+        background-size: 300%;
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        background-size: 500%;
+        background-position: 50% 40%;
+        opacity: 0;
+    }
+}
+
 .open-curtain {
     animation: open-curtain 3s linear forwards;
 }
@@ -458,7 +466,7 @@ main, body {
         opacity: 0.5;
     }
     100% {
-        margin-top: 15%;
+        margin-top: var(--margin-top-ticket);
         opacity: 1;
     }
 }
@@ -662,6 +670,85 @@ h1 {
     #homeButton {
         position: inherit;
     }
+
+    #categoryPhoto_div {
+        margin-top: -80px;
+        margin-right: 40px;
+    }
+
+    #navBar li {
+        margin-top: 10px;
+    }
+
+    #navBar ul {
+        margin-right: 10px;
+    }
+
+    #logoutButton {
+        font-size: 32px;
+    }
+
+    .wrapper {
+        font-size: 12px;
+    }
+
+    .category_div img {
+        height: 50px;
+    }
+
+    .categoryPhoto {
+        background-size: 80px;
+        width: 30%;
+    }
+
+    :root {
+        --margin-top-ticket: 5%;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .categoryPhoto {
+        width: 50%;
+    }
+
+    .zoom-inside {
+        animation: zoom-inside-smartphone 4s ease-in forwards;
+    }
+
+    #categoryPhoto_div {
+        margin-top: -20px;
+    }
+
+    #ticket {
+        width: 90%;
+        height: auto;
+        margin-left: 5%;
+        margin-right: 5%;
+
+    }
+
+    #ticket h1 {
+        font-size: 20px;
+    }
+
+    #login_form input {
+        font-size: 14px;
+        width: 240px;
+    }
+
+    .errorMessage {
+        font-size: 12px;
+    }
+
+    .code {
+        bottom: -7px;
+        font-size: 12px;
+    }
+
+    :root {
+        --margin-top-ticket: 5%;
+    }
+
 }
 
 @media screen and (max-width: 1200px) {

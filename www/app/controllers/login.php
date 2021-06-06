@@ -7,7 +7,7 @@ $session = new Session();
 if (!empty($_POST)) {
     if ($_POST['action'] === 'login') {
         $password = $_POST['password'];
-        $correct_password = '$2y$10$tMUFQ24knYE04oCRS65GJ.ObmTFOsWNkKc.d/QUKnO6J68oaGthFW';
+        $correct_password = '$2y$10$Ec5i8MgTxrYNDuaKDd8MBe7uGOSVR4Oh4hUiEP.96yu8wvReo6k8S';
         $Event = new EventModel();
         if (password_verify($password, $correct_password)) {
             $User = new UserModel();
