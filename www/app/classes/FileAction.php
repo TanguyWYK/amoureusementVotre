@@ -3,7 +3,7 @@
 
 class FileAction
 {
-    const OFFSET = 41;
+    const OFFSET = 41; // Remplacer valeur selon le chemin de votre dossier
 
     public function getAllFilesInDirectory($path)
     {
@@ -41,18 +41,15 @@ class FileAction
     {
         $files = array_values(array_diff(scandir($path_origin), array('.', '..')));
         foreach ($files as $file) {
-            // type d'extension
             $ext = substr($file, strrpos($file, '.') + 1);
-            // nom du fichier
             $fileNameExplode = explode('.', $file);
             $fileName = $fileNameExplode[0];
             for ($i = 1; $i < count($fileNameExplode) - 1; $i++) {
                 $fileName .= "." . $fileNameExplode[$i];
             }
-            // image source
             $image_source_path = $path_origin . $file;
-            // indique la cible
             $image_target_path = $path_destination . $fileName . $suffix . '.' . $ext;
+
             // Recherche si rotation de l'image source
             $exif = exif_read_data($image_source_path);
             $orientation = key_exists('Orientation', $exif) ? $exif['Orientation'] : 1;

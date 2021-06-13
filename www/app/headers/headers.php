@@ -2,7 +2,7 @@
 
 /* Definition des chemins relatif et absolu */
 define('ABSOLUTE_PATH', substr(__DIR__, 0, -11));
-const DIRECTORY_SITE = 'www/';
+const DIRECTORY_SITE = 'www/'; // mettre vide pour la mise en prod
 const RELATIVE_PATH = [
     'controllers' => ABSOLUTE_PATH . 'app/controllers/',
     'models' => ABSOLUTE_PATH . 'app/models/',

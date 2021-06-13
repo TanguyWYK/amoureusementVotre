@@ -1,0 +1,18 @@
+<div id="morePhoto_background">
+    <div id="morePhoto_div">
+        <h2>Pour nous faire parvenir de nouvelles photos du mariage, voici quelques possibilités : </h2>
+        <ul>
+            <li>Envoi par mail</li>
+            <li>Envoi par mail d'un lien d'album partagé (google drive, dropbox, ...)</li>
+            <li>Partage de fichier zip par WeTranfer</li>
+            <li>Comme James Bond, envoi par courrier d'une clé USB</li>
+            <li>Rendez vous dans un lieu secret à Strasbourg pour remise des informations</li>
+        </ul>
+        <input id="morePhoto_checkBox" type="checkbox" <?= $more_photos === '1' ? "checked" : "" ?>>
+        <label for="morePhoto_checkBox">Je souhaite reçevoir un mail lorsque les mariés ajoutent de nouvelles photos</label>
+        <div class="wrapper">
+            <div class="category_background"></div>
+            <p class="category_p" onclick="saveMorePhotoStatus()" id="morePhoto_button">Enregistrer</p>
+        </div>
+    </div>
+</div>

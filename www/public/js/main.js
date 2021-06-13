@@ -1,8 +1,8 @@
 'use strict';
-const DIRECTORY_SITE = 'www/';
+const DIRECTORY_SITE = 'www/'; // mettre vide pour la mise en prod
 
 const RELATIVE_PATH = {
-    controllers:DIRECTORY_SITE + 'app/controllers/',
+    controllers: DIRECTORY_SITE + 'app/controllers/',
     icons: DIRECTORY_SITE + 'public/icons/',
     storage: DIRECTORY_SITE + 'storage/',
 };
@@ -148,6 +148,15 @@ function generateSprites() {
         action: 'generateSprites',
     }).then((data) => {
         console.log(data);
+    });
+}
+
+function saveMorePhotoStatus(){
+    postXHR('more', {
+        action: 'updateMorePhotoStatus',
+        more_photos: document.getElementById('morePhoto_checkBox').checked?'1':'0',
+    }).then(() => {
+        document.location.href = 'home';
     });
 }
 

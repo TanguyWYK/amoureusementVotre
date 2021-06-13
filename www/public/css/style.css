@@ -2,6 +2,7 @@
     --button-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
     --angle-polaroid: 1deg;
     --category-color: rgb(196, 0, 30);
+    --category-background-color: #f5f5f5;
     --margin-top-ticket: 15%;
 }
 
@@ -121,11 +122,27 @@ main, body {
     margin: auto;
 }
 
-#categoryBackground {
+#categoryBackground,#morePhoto_background {
     height: 100%;
     background-image: url(../images/site/background.jpg);
     background-size: cover;
     background-position: center;
+}
+
+#morePhoto_background{
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+#morePhoto_div h2{
+    margin-top: 0;
+    font-size: 24px;
+}
+
+#morePhoto_div .wrapper{
+    margin-left: calc(50% - 75px);
+    margin-top: 20px;
 }
 
 .categoryPhoto {
@@ -147,7 +164,7 @@ main, body {
     color: var(--category-color);
     border: 3px solid var(--category-color);
     font-family: sans-serif;
-    background-color: #f5f5f5;
+    background-color: var(--category-background-color);
     font-weight: 700;
     box-shadow: 5px 5px 0 #666;
     transition-duration: 0.3s;
@@ -163,7 +180,7 @@ main, body {
 }
 
 .wrapper:hover .category_p {
-    color: #f5f5f5;
+    color: var(--category-background-color);
 }
 
 .category_background {
@@ -176,6 +193,36 @@ main, body {
     left: 0;
     top: 0;
     animation-duration: 0.2s;
+}
+
+#morePhoto_div {
+    width: 50%;
+    background-color: var(--category-background-color);
+    font-size: 20px;
+    font-family: 'Roboto', sans-serif;
+    border: 3px solid black;
+    align-self: center;
+    padding: 20px;
+}
+
+#morePhoto_div label, #morePhoto_div input{
+    cursor: pointer;
+}
+
+#morePhotoCategory_div{
+    width: 300px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-self: center;
+}
+
+#morePhotoCategory_div img{
+    cursor: pointer;
+}
+
+#morePhotoCategory_div img:hover{
+    filter: drop-shadow(5px 5px 5px #222);
 }
 
 @keyframes loading {
@@ -216,14 +263,14 @@ main, body {
 }
 
 .sprite3 {
-    background-image: url(../../storage/photos_mini/03-Château%20Aubiac/sprite.jpg);
+    background-image: url(../../storage/photos_mini/03-Chateau%20Aubiac/sprite.jpg);
 }
 
-.sprite5 {
+.sprite4 {
     background-image: url(../../storage/photos_mini/04-Photobooth/sprite.jpg);
 }
 
-.sprite6 {
+.sprite5 {
     background-image: url(../../storage/photos_mini/05-Riedisheim/sprite.jpg);
 }
 
@@ -694,6 +741,23 @@ h1 {
 
     .category_div img {
         height: 50px;
+    }
+
+    #morePhotoCategory_div{
+        width: 160px;
+    }
+
+    #morePhotoCategory_div img{
+        width: 50px;
+    }
+
+    #morePhoto_div{
+        font-size: 12px;
+        width: 90%;
+    }
+
+    #morePhoto_div h2{
+        font-size: 16px;
     }
 
     .categoryPhoto {

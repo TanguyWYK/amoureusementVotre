@@ -18,6 +18,7 @@ if (!empty($_POST)) {
                 $user = $User->getUserById($email);
             }
             $session->create($user);
+            $User->setUserLastConnection($session->getId());
             $Event->addEvent('login_' . $session->getId());
             header('Content-type: application/json');
             echo json_encode(true);

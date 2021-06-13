@@ -25,7 +25,7 @@ class Session
 
     public function getId()
     {
-        return $_SESSION["id"];
+        return $_SESSION['id'];
     }
 
     public function getEmail()

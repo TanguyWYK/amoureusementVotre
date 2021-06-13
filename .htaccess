@@ -11,6 +11,7 @@ RewriteEngine On
 RewriteRule ^$  www/app/controllers/home.php [L]
 RewriteRule ^home$  www/app/controllers/home.php [L]
 RewriteRule ^login$  www/app/controllers/login.php [L]
+RewriteRule ^more$  www/app/controllers/more.php [L]
 RewriteRule ^album.  www/app/controllers/album.php [L]
 
 # Redirection pour la favicon
